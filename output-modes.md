@@ -86,8 +86,10 @@
 - 输出可运行项目目录。
 - 输出 `package.json`、`index.html`、应用入口、页面、组件、样式、fixtures 和 README。
 - React 默认使用 TypeScript、Vite 和 CSS variables。
+- React 完整项目默认参考 `assets/frontend-template/`。
 - Vue 使用 SFC、TypeScript、Vite 和 scoped style。
 - HTML/CSS 使用静态目录、`styles/`、`scripts/` 和 `data/`。
+- 零依赖静态项目默认参考 `assets/static-template/`。
 - 必须包含 AppShell、Navigation、Announcement、SearchFilter、CardGrid、MediaCard、CTA、Footer 和状态组件。
 - 必须包含 loading、empty、error、success、focus、disabled、active、hover。
 - 必须给出运行命令和构建检查。

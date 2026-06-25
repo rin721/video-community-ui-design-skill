@@ -27,7 +27,14 @@
 2. 按任务类型读取 `design-tokens.json`、`style-profile.md`、`layout-patterns.md` 和 `component-recipes.md`。
 3. 继续读取交互、响应式、内容和适配规则。
 4. 根据 `output-modes.md` 选择输出形式。
-5. 使用 `validation-checklist.md` 做最终检查。
+5. 完整前端项目再读取 `frontend-project-rules.md` 与 `assets/frontend-template/` 或 `assets/static-template/`。
+6. 使用 `validation-checklist.md` 做最终检查。
+
+## 安装与发现
+
+- `SKILL.md` 提供 Codex skill 的触发名称和描述。
+- `agents/openai.yaml` 提供 UI 列表、技能卡片和默认 prompt 元数据。
+- 当前仓库可作为独立 skill 文件夹复制或同步到 Codex skills 目录。
 
 ## 输入参数准备
 
@@ -59,6 +66,10 @@
 /
 ├── SKILL.md
 ├── README.md
+├── agents/
+│   └── openai.yaml
+├── scripts/
+│   └── validate_skill_package.py
 ├── design-tokens.json
 ├── style-profile.md
 ├── layout-patterns.md
@@ -72,21 +83,51 @@
 ├── runtime-decision-tree.md
 ├── output-modes.md
 ├── validation-checklist.md
+├── assets/
+│   ├── frontend-template/
+│   └── static-template/
 └── examples/
     ├── landing-page.md
     ├── corporate-homepage.md
     ├── product-section.md
-    └── mobile-page.md
+    ├── mobile-page.md
+    ├── frontend-project.md
+    └── forward-tests/
 ```
+
+## 验证命令
+
+```bash
+python -X utf8 "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_validate.py" .
+python -X utf8 scripts\validate_skill_package.py .
+git diff --check
+```
+
+`scripts/validate_skill_package.py` 会检查 frontmatter、`agents/openai.yaml`、`design-tokens.json`、必备 Markdown、examples、模板入口和发布态清洁度。
+
+## 模板资产
+
+- `assets/frontend-template/`: React、TypeScript、Vite 和 CSS variables 项目起点，包含入口、组件、fixtures、状态分支和运行说明。
+- `assets/static-template/`: HTML、CSS 和原生 JavaScript 起点，适合零依赖交付或静态页面生成。
+- 两套模板都使用中性 fixtures、可替换媒体占位、focus-visible、reduced motion、loading、empty、error 和 success 状态。
+
+## 前向测试
+
+`examples/forward-tests/` 保存最小测试 prompt，用于检查该 skill 在真实调用中的稳定性：
+
+- `examples/frontend-project.md`
+- `design-spec-prompt.md`
+- `react-project-prompt.md`
+- `static-html-prompt.md`
 
 ## 扩展方式
 
 - 更新视觉风格时，先改 `design-tokens.json`，再同步 `style-profile.md`。
 - 更新布局能力时，改 `layout-patterns.md` 并补充 `responsive-rules.md`。
 - 更新组件时，改 `component-recipes.md` 并保持状态、响应式和可访问性字段完整。
-- 更新完整项目生成能力时，改 `frontend-project-rules.md` 并同步 `output-modes.md` 与 `prompt-templates.md`。
+- 更新完整项目生成能力时，改 `frontend-project-rules.md`、`assets/frontend-template/`、`assets/static-template/`，并同步 `output-modes.md` 与 `prompt-templates.md`。
 - 更新提示词时，改 `prompt-templates.md` 并保持中性占位文案。
-- 每次更新后运行 `validation-checklist.md` 中的检查项。
+- 每次更新后运行 `validation-checklist.md` 中的检查项和仓库验证命令。
 
 ## 质量要求
 

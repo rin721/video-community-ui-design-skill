@@ -50,6 +50,8 @@ description: Build soft, lively, media-community UI systems for video-heavy home
 
 ## 文件读取顺序
 
+普通设计任务按下列顺序读取，避免一次性加载完整项目模板：
+
 1. `design-tokens.json`
 2. `style-profile.md`
 3. `layout-patterns.md`
@@ -58,11 +60,27 @@ description: Build soft, lively, media-community UI systems for video-heavy home
 6. `responsive-rules.md`
 7. `content-rules.md`
 8. `adaptation-rules.md`
-9. `frontend-project-rules.md`，仅在用户要求完整前端项目时读取。
-10. `output-modes.md`
-11. `validation-checklist.md`
+9. `output-modes.md`
+10. `validation-checklist.md`
 
 仅在需要可复用提示词或示例结构时读取 `prompt-templates.md` 与 `examples/`。
+
+## 模板资产读取规则
+
+- 仅当用户要求完整前端项目、可运行工程或模板化代码落地时，读取 `frontend-project-rules.md`。
+- React、TypeScript、Vite 项目默认参考 `assets/frontend-template/`，并按用户需求替换页面内容、fixtures 和 token。
+- 零依赖或静态交付默认参考 `assets/static-template/`，保留语义 HTML、CSS variables、轻量 JavaScript 状态分支和直接打开说明。
+- 模板资产只作为可复制起点，不得照搬为不可替换的业务页面；生成结果仍必须通过 `validation-checklist.md`。
+
+## 验证命令
+
+更新该 skill 后运行：
+
+```bash
+python -X utf8 "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_validate.py" .
+python -X utf8 scripts\validate_skill_package.py .
+git diff --check
+```
 
 ## Runtime Procedure
 
@@ -74,8 +92,9 @@ description: Build soft, lively, media-community UI systems for video-heavy home
 6. 为 desktop、tablet、mobile 分别给出重排、字号、间距和触控目标。
 7. 套用内容规则，保证标题、元信息、CTA 和提示文案可替换。
 8. 按输出模式生成结果。
-9. 运行 `validation-checklist.md`。
-10. 运行发布态清洁度检查。
+9. 如果输出完整项目，参考对应 `assets/*-template/` 并保留入口、样式、fixtures、状态和运行说明。
+10. 运行 `validation-checklist.md`。
+11. 运行发布态清洁度检查。
 
 ## Runtime Decision Tree
 
@@ -84,7 +103,7 @@ description: Build soft, lively, media-community UI systems for video-heavy home
 - 如果用户指定 React，输出组件拆分、props、状态和 CSS module 或 Tailwind 实现。
 - 如果用户指定 Vue，输出单文件组件结构、props、slots、状态和 scoped 样式。
 - 如果用户指定 Tailwind，输出 token 到 class 的映射，并保留 CSS variables 作为主题层。
-- 如果用户要求完整前端项目，读取 `frontend-project-rules.md`，输出可运行项目结构、入口文件、组件层、样式层、fixtures、状态分支和运行命令。
+- 如果用户要求完整前端项目，读取 `frontend-project-rules.md`，再按技术栈参考 `assets/frontend-template/` 或 `assets/static-template/`，输出可运行项目结构、入口文件、组件层、样式层、fixtures、状态分支和运行命令。
 - 如果用户缺少文案，使用中性占位文案。
 - 如果用户缺少图片，使用比例盒、渐变占位、alt 规则和可替换媒体槽。
 - 如果用户提供主色，替换 `color.brand.primary` 并重算浅层、悬停、焦点和阴影色。

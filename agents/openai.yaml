@@ -1,0 +1,8 @@
+interface:
+  display_name: "Video Community UI Design"
+  short_description: "Video-community UI specs, tokens, and templates"
+  brand_color: "#F06E8E"
+  default_prompt: "Use $video-community-ui-design-skill to design a light video-community page with tokens, responsive states, and accessibility notes."
+
+policy:
+  allow_implicit_invocation: true

@@ -8,7 +8,9 @@
 
 - 用户指定技术栈时，按指定技术栈生成。
 - 用户要求完整项目但未指定技术栈时，默认使用 React、TypeScript、Vite 和 CSS variables。
+- React、TypeScript、Vite 项目默认参考 `assets/frontend-template/`。
 - 用户要求零依赖或静态交付时，使用 HTML、CSS 和少量原生 JavaScript。
+- 零依赖或静态交付默认参考 `assets/static-template/`。
 - 用户要求 Vue 时，使用 Vue SFC、TypeScript、Vite 和 scoped style。
 - 用户要求 Tailwind 时，保留 CSS variables 作为主题层，并在 utility class 中调用。
 
@@ -208,6 +210,7 @@
 ## 输出纪律
 
 - 如果用户要求代码落地，直接创建项目文件。
+- 如果用户要求完整项目，优先使用对应 `assets/*-template/` 作为可复制起点，再按用户输入替换内容和 token。
 - 如果用户要求方案，输出完整项目文件树与关键文件内容。
 - 如果用户只要求单组件，不强制生成项目骨架。
 - 完整项目不得遗漏入口文件、样式入口、数据占位和运行说明。
