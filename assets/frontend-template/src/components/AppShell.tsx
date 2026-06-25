@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Box } from "@mui/material";
 import { Navigation } from "./Navigation";
 
 type AppShellProps = {
@@ -7,9 +8,9 @@ type AppShellProps = {
 
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="app-shell">
+    <Box sx={{ minHeight: "100vh", bgcolor: "var(--color-surface-page)" }}>
       <Navigation />
-      <div className="app-shell__content">{children}</div>
-    </div>
+      <Box sx={{ minHeight: "100vh" }}>{children}</Box>
+    </Box>
   );
 }

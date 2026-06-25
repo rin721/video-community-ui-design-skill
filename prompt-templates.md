@@ -3,232 +3,184 @@
 ## 生成官网首页
 
 ```text
-Use video-community-ui-design-skill to generate a UI design spec for a homepage.
-Input:
+Use video-community-ui-design-skill to generate a homepage UI design spec.
+
+Inputs:
 - page_type: homepage
-- audience: [目标用户]
-- content_model: [内容对象与字段]
-- brand_overrides: [可选主色、字体、密度]
+- audience: [用户群体]
+- content_model: media cards with title, creator, views, duration, date, category
 - output_mode: spec
+
 Requirements:
-- Include app shell, navigation, announcement, media card grid, feature section, CTA, footer.
-- Use semantic design tokens.
-- Include hover, focus, loading, empty, error, success states.
-- Include desktop, tablet, mobile rules.
-- Include accessibility notes and validation checklist.
+- Use decorative masthead, rail navigation, category tabs, announcement bar, media feed, CTA, and footer.
+- Include design tokens, component recipes, interactions, responsive rules, accessibility notes, and validation checklist.
+- Use neutral replaceable content.
 ```
 
 ## 生成 Landing Page
 
 ```text
-使用 video-community-ui-design-skill 生成 landing page。
-输入：
+Use video-community-ui-design-skill to create a landing page for a lightweight media product.
+
+Inputs:
 - page_type: landing
-- audience: [目标用户]
-- value_message: [核心价值]
-- tech_stack: [html-css/react/vue/tailwind/spec]
-输出：
-- hero、功能区、媒体展示、优势列表、CTA、页脚
-- design tokens 使用说明
-- 组件状态
-- 响应式规则
-- 可访问性检查项
+- output_mode: html-css
+- brand_overrides: [可选主色/字体/密度]
+
+Requirements:
+- Keep a compact decorative hero and visible next section.
+- Include feature list, media block, CTA, footer, mobile layout, focus-visible, and reduced motion.
+- Keep the visual system light, soft, geometric, and content-first.
 ```
 
 ## 生成产品介绍区
 
 ```text
-Use video-community-ui-design-skill to create a product-section UI.
-Input:
-- section_goal: [介绍目标]
-- features: [功能列表]
-- media_need: [媒体槽需求]
-- output_mode: [spec/react/vue/html-css]
-Return:
-- section structure
-- media block recipe
-- feature list recipe
-- CTA recipe
-- responsive behavior
-- accessibility requirements
+Use video-community-ui-design-skill to design a product section.
+
+Inputs:
+- page_type: product-section
+- section_goal: [介绍内容]
+- output_mode: spec
+
+Requirements:
+- Use a small wordmark-style heading, subtle diagonal accent, media block, feature list, and light CTA.
+- Include token usage, responsive behavior, and accessibility notes.
 ```
 
 ## 生成移动端页面
 
 ```text
-使用 video-community-ui-design-skill 生成移动端内容页面。
-必须包含：
-- 56px 顶部栏
-- 56px 底部导航
-- 可读内容卡片
-- 单列或双列卡片重排
-- 44px 以上触控目标
-- loading、empty、error 状态
-- reduced motion 处理
+Use video-community-ui-design-skill to generate a mobile media discovery page.
+
+Inputs:
+- page_type: mobile-page
+- output_mode: react
+
+Requirements:
+- Use `size.nav.mobileBar` top bar, compact masthead, announcement bar, category tabs, 1-2 column media cards, `size.nav.mobileBar` bottom navigation, toast, loading, empty, and error states.
+- Avoid horizontal overflow and preserve `size.touch.min` touch targets.
 ```
 
 ## 生成组件规范
 
 ```text
-Use video-community-ui-design-skill to generate a component library spec.
-Components:
-- Button
-- Navigation
-- Card
-- Form
-- Modal
-- Tag
-- Toast
-For each component include:
-- usage
-- anatomy
-- tokens
-- variants
-- states
-- responsive rules
-- accessibility rules
-- implementation notes
+Use video-community-ui-design-skill to produce a component library spec.
+
+Inputs:
+- page_type: component-spec
+- components: BrandHeader, DecorativeMasthead, SidebarRail, CategoryTabs, AnnouncementBar, MediaFeedSection, MediaCard, BottomNav, Toast, GeometricState
+
+Requirements:
+- For each component, include usage, visual structure, token dependencies, states, responsive rules, accessibility rules, implementation hints, and anti-patterns.
 ```
 
 ## 生成 Design Tokens
 
 ```text
-使用 video-community-ui-design-skill 输出 design tokens。
-包含：
-- color
-- typography
-- spacing
-- radius
-- shadow
-- border
-- motion
-- breakpoint
-- zIndex
-- opacity
-- blur
-- container
-- grid
-每个 token 包含 name、value、role、usage、confidence、modifiable、fallback。
+Use video-community-ui-design-skill to generate design tokens.
+
+Inputs:
+- page_type: design-tokens
+- brand_overrides: [主色/字体/圆角/动效强度]
+
+Requirements:
+- Include color, typography, spacing, radius, shadow, border, motion, breakpoint, zIndex, opacity, blur, container, grid, size, layout, and decoration tokens.
+- Use semantic names only.
 ```
 
 ## 生成 React 实现
 
 ```text
-Use video-community-ui-design-skill to implement a React page.
-Constraints:
-- Use semantic HTML.
-- Define CSS variables from design tokens.
-- Create components for AppShell, Navigation, Announcement, MediaCard, CardGrid, CTA, Footer.
-- Include loading, empty, error, success states.
-- Include keyboard focus and aria labels.
-- Avoid horizontal overflow on mobile.
-```
+Use video-community-ui-design-skill to create a React implementation with the real Material UI library.
 
-## 生成完整前端项目
+Inputs:
+- tech_stack: react-mui
+- output_mode: mui-frontend-project
+- content_model: neutral media fixtures
 
-```text
-Use video-community-ui-design-skill to generate a complete frontend project.
-Input:
-- output_mode: frontend-project
-- tech_stack: react
-- page_type: homepage
-- audience: [目标用户]
-- content_model: [内容字段]
-Must include:
-- package.json
-- index.html
-- src/main.tsx
-- src/App.tsx
-- src/pages/HomePage.tsx
-- src/components/*
-- src/styles/tokens.css
-- src/styles/base.css
-- src/styles/app.css
-- src/data/fixtures.ts
-- README.md
-Design requirements:
-- aesthetic style
-- visual framework
-- design system
-- component derivation
-- interaction and motion
-- brand expression
-- desktop/tablet/mobile responsive behavior
-- loading, empty, error, success states
-- WCAG AA accessibility notes
-Verification:
-- provide npm install, npm run dev, npm run build
-- ensure no horizontal overflow on mobile
-- ensure token variables are used in component styles
+Requirements:
+- Use assets/frontend-template as the project shape.
+- Install/use @mui/material, @emotion/react, and @emotion/styled.
+- Add a src/theme.ts layer with createTheme({ cssVariables: true }) and wrap the app with ThemeProvider + CssBaseline.
+- Assemble UI from actual MUI primitives, slots, variants, state props, ownerState/theme overrides, and token-backed sx; do not hand-roll MUI-equivalent DOM/CSS.
+- Map SidebarRail to Drawer/Box/IconButton, TopBar to AppBar/Toolbar, CategoryTabs to Tabs/Tab, Announcement to Alert/Paper/Stack, MediaCard to Card/CardActionArea/CardMedia/CardContent, Toast to Snackbar/Alert, and BottomNav to BottomNavigation.
+- Keep homepage MediaCard roots flat (`elevation={0}`, transparent root) with hover on title/media slot only; reserve Paper shadows and hover lift for Announcement, overlays, CTA, or framed cards.
+- Use SoftIconButton/PillToggle/RippleSurface anatomy: IconButton for round rail/detail actions, Tabs indicator for homepage categories, pills only for search/filter tags, and CardActionArea/TouchRipple for media clicks.
+- Include AppShell, Navigation, DecorativeMasthead, CategoryTabs, Announcement, MediaFeedSection, MediaCard, StateBlock, Toast, CTA, and Footer.
+- Include normal, loading, empty, error, and success/toast states.
+- Provide npm install, npm run dev, and npm run build commands.
 ```
 
 ## 生成 Vue 实现
 
 ```text
-Use video-community-ui-design-skill to implement a Vue page.
-Constraints:
-- Use SFC components.
-- Use props for variants and states.
-- Use slots for card content and actions.
-- Define scoped styles with token variables.
-- Include responsive rules and accessibility attributes.
+Use video-community-ui-design-skill to create Vue SFC components for a media discovery page.
+
+Requirements:
+- Map tokens to CSS variables.
+- Use props, slots, emits, scoped styles, responsive rules, and reduced motion.
+- Include masthead, tabs, announcement, media feed, states, and mobile navigation.
 ```
 
-## 生成 HTML CSS 实现
+## 生成 HTML/CSS 实现
 
 ```text
-使用 video-community-ui-design-skill 输出纯 HTML/CSS。
-要求：
-- 语义化 HTML
-- CSS variables
-- 16:9 媒体卡片
-- 固定导航与移动底部导航
-- focus-visible
-- reduced motion
-- 响应式断点
+Use video-community-ui-design-skill to create a static HTML/CSS page.
+
+Inputs:
+- tech_stack: html-css
+- output_mode: frontend-project
+
+Requirements:
+- Use assets/static-template as the project shape.
+- Include semantic HTML, a CSS variable token layer mapped from `design-tokens.json`, component CSS that consumes token variables, light JavaScript states, no build dependency, and direct-open instructions.
+- This mode is a zero-dependency generic static fallback. Do not call it MUI and do not imply it implements Material UI components.
+- Use semantic HTML with generic component slots: shell, navigation, tabs, alert-like surface, media card body, toast-like status, and bottom navigation.
+- Homepage media cards should be flat clickable surfaces: no heavy card shadow, no large lift, token-backed body padding, visible focus ring, title/media hover, and separate handling for nested author/tag actions.
+- Keep raw `px`, `rgb()`, `#hex`, shadow, breakpoint, z-index, and motion values inside the token layer or documented fallback only; component selectors should use variables such as `--size-nav-rail`, `--layout-masthead-height`, and `--grid-feed-min`.
 ```
 
 ## 替换色彩风格
 
 ```text
-使用 video-community-ui-design-skill 调整色彩。
-输入：
-- new_primary: [新主色]
-- mood: [高级感/极简感/企业感/产品感]
-输出：
-- 更新后的 color token
-- 需要同步调整的 hover、pressed、focus、shadow、ripple
-- 视觉一致性检查
+Use video-community-ui-design-skill to adapt the color system.
+
+Inputs:
+- brand_overrides.primary: [新主色]
+
+Requirements:
+- Recalculate brand soft, mist, hover, pressed, focus ring, shadows, decorative accents, and selected states.
+- Validate contrast and state visibility.
 ```
 
 ## 替换组件风格
 
 ```text
-Use video-community-ui-design-skill to adapt component style.
-Input:
-- component: [组件名称]
-- density: [compact/standard/relaxed]
-- radius: [4px-10px]
-- motion: [static/light/spring]
-Return:
-- updated recipe
-- affected tokens
-- state rules
-- responsive notes
-- validation items
+Use video-community-ui-design-skill to adjust component density and motion.
+
+Inputs:
+- density: [high|medium|low]
+- motion_strength: [static|light|spring]
+
+Requirements:
+- Preserve token-backed navigation sizing, masthead visibility, category tabs, announcement, media card metadata order, focus-visible, touch targets, and reduced motion.
 ```
 
 ## 运行质量检查
 
 ```text
-使用 video-community-ui-design-skill 检查生成结果。
-检查：
-- token 是否完整使用
-- layout grammar 是否一致
-- component recipe 是否覆盖状态
-- mobile 是否可读
-- keyboard 是否可操作
-- focus 是否可见
-- reduced motion 是否可用
-- 是否存在专有资产、真实业务数据或不可替换文案
+Use video-community-ui-design-skill to validate a generated page or project.
+
+Check:
+- aesthetic style
+- visual framework
+- design tokens
+- component recipes
+- interactions
+- responsive rules
+- accessibility
+- neutral content
+- release cleanliness
+- build or direct-open readiness
 ```

@@ -1,95 +1,137 @@
 # Output Modes
 
-## 默认输出模式
+## 默认输出
 
-用户未指定技术栈时，默认输出 `UI design spec`。该模式包含设计语言、token、布局、组件、交互、响应式、内容和可访问性规则。
+若用户未指定技术栈，默认输出 `UI design spec`。规格必须包含美学风格、视觉框架、design tokens、组件配方、交互状态、响应式规则、内容规则、可访问性要求和质量检查。
 
 ## UI Design Spec
 
-- 输出页面目标。
-- 输出信息架构。
-- 输出布局结构。
-- 输出 design token 映射。
-- 输出组件配方。
-- 输出交互状态。
-- 输出响应式规则。
-- 输出可访问性与质量检查。
+输出内容：
+
+- 页面目标和受众。
+- 装饰 masthead、分类 tabs、公告和媒体流的布局规则。
+- token 使用表。
+- 组件清单和状态矩阵。
+- desktop、tablet、mobile 规则。
+- 可访问性和清洁度检查。
 
 ## HTML / CSS
 
-- 输出语义 HTML。
-- 输出 CSS variables。
-- 输出组件 class。
-- 输出 media queries。
-- 输出 focus-visible 与 reduced motion。
-- 不依赖框架运行。
+输出内容：
+
+- 语义 HTML。
+- CSS variables token 层。
+- masthead、rail、tabs、announcement、media grid、state、toast、footer 样式。
+- `prefers-reduced-motion`。
+- `focus-visible`。
 
 ## React
 
-- 输出组件拆分。
-- 输出 props 与状态模型。
-- 输出 CSS module、普通 CSS 或 Tailwind。
-- 输出可访问性属性。
-- 输出 loading、empty、error、success 分支。
+输出内容：
+
+- 默认使用真实 MUI library composition，除非用户明确要求 plain React。
+- 组件拆分：AppShell、Navigation、DecorativeMasthead、CategoryTabs、AnnouncementBar、MediaFeedSection、MediaCard、StateBlock、Toast、CTA、Footer。
+- props 和 state 类型。
+- fixtures。
+- CSS variables token layer 和 MUI theme layer。
+- `ThemeProvider`、`createTheme({ cssVariables: true })`、component slots、variants、state props、`ownerState`/`sx` 边界。
+- MUI primitives 映射：`Drawer`/`AppBar`/`Tabs`/`Alert`/`Card`/`Snackbar`/`BottomNavigation`。
+- loading、empty、error、success 分支。
+
+## React MUI / MUI Frontend Project
+
+输出内容：
+
+- `tech_stack: react-mui` 或 `output_mode: mui-frontend-project`。
+- 依赖：`@mui/material`、`@emotion/react`、`@emotion/styled`；仅在确实需要图标库时加入 `@mui/icons-material`。
+- `src/theme.ts` 使用 `createTheme({ cssVariables: true })`，并由 `ThemeProvider` 包裹应用。
+- 页面从 MUI primitive、slots、variants、states 和 token-backed `sx` 组装，不直接手写替代已有 MUI 组件的 DOM/CSS。
+- 核心映射：`SidebarRail -> Drawer/Box/IconButton`，`TopBar -> AppBar/Toolbar`，`CategoryTabs -> Tabs/Tab`，`AnnouncementBar -> Alert/Paper/Stack`，`MediaCard -> Card/CardActionArea/CardMedia/CardContent`，`Toast -> Snackbar/Alert`，`BottomNav -> BottomNavigation`。
+- 禁止把静态 HTML/CSS 视觉近似称为 MUI 实现；只要用户要求 MUI 或通用组件库，就走本模式。
 
 ## Vue
 
-- 输出 SFC 结构。
-- 输出 props、computed、slots。
-- 输出 scoped CSS 与 CSS variables。
-- 输出响应式和状态分支。
-- 输出键盘与触控规则。
+输出内容：
+
+- SFC 组件结构。
+- props、slots、emits。
+- scoped style 和 token variables。
+- 状态分支和响应式规则。
 
 ## Tailwind
 
-- 输出 token 到 theme 的映射。
-- 使用 class 组织布局。
-- 对复杂 token 使用 CSS variables。
-- 保留 focus、motion 和 reduced motion。
+输出内容：
+
+- theme token 映射。
+- 自定义 utilities：masthead、rail、decorative-stripe、media-card、glass。
+- 组件 class 组合。
+- 保留 CSS variables 作为主题层。
 
 ## Figma Prompt
 
-- 输出画板尺寸。
-- 输出布局结构。
-- 输出 token。
-- 输出组件状态。
-- 输出响应式变体。
-- 输出命名规范。
+输出内容：
+
+- 画面尺寸和断点。
+- 浅底樱粉色彩。
+- `size.nav.rail` rail、masthead、斜向色带、星形/十字/三角装饰。
+- 分类 tabs、公告信息条、16:9 媒体卡片网格。
+- 状态页几何表达。
 
 ## Wireframe Outline
 
-- 输出低保真结构。
-- 保留模块顺序和信息优先级。
-- 不输出具体视觉细节。
-- 适合需求早期确认。
+输出内容：
+
+- 框架层级。
+- 模块顺序。
+- 网格和容器。
+- 响应式重排。
+- 交互状态清单。
 
 ## Component Library Spec
 
-- 输出组件列表。
-- 每个组件包含 anatomy、variants、states、tokens、accessibility、responsive、implementation notes。
-- 适合建立设计系统或前端组件库。
+输出内容：
+
+- 组件派生层级。
+- 每个组件的用途、结构、token、状态、响应式、可访问性和禁用项。
+- 状态矩阵。
+- 设计 token 对照。
 
 ## Landing Page Structure
 
-- 输出 hero、价值说明、媒体展示、功能列表、CTA、页脚。
-- 保留轻盈内容平台气质。
-- 不使用过大营销卡片堆叠。
+输出内容：
+
+- 紧凑 hero 或 masthead。
+- 功能区。
+- 媒体展示。
+- CTA。
+- 页脚。
+- 仍需保留轻装饰和内容优先气质。
 
 ## Responsive Layout Plan
 
-- 输出 desktop、tablet、mobile 三套布局。
-- 明确导航切换、卡片列数、字号、间距和触控目标。
-- 明确横屏移动端和长文本策略。
+输出内容：
+
+- desktop、tablet、mobile 的导航切换。
+- masthead 高度变化。
+- 卡片列数。
+- 字号、间距和触控目标。
+- 长文本折行策略。
 
 ## Frontend Project
 
-- 输出可运行项目目录。
-- 输出 `package.json`、`index.html`、应用入口、页面、组件、样式、fixtures 和 README。
-- React 默认使用 TypeScript、Vite 和 CSS variables。
-- React 完整项目默认参考 `assets/frontend-template/`。
-- Vue 使用 SFC、TypeScript、Vite 和 scoped style。
-- HTML/CSS 使用静态目录、`styles/`、`scripts/` 和 `data/`。
-- 零依赖静态项目默认参考 `assets/static-template/`。
-- 必须包含 AppShell、Navigation、Announcement、SearchFilter、CardGrid、MediaCard、CTA、Footer 和状态组件。
-- 必须包含 loading、empty、error、success、focus、disabled、active、hover。
-- 必须给出运行命令和构建检查。
+React 完整项目使用 `assets/frontend-template/`，默认输出 MUI frontend project。
+
+静态完整项目使用 `assets/static-template/`，仅作为 zero-dependency generic fallback；不得声称实现 MUI 或 Material UI 组件体系。
+
+完整项目必须包含：
+
+- 入口文件。
+- 页面级组件。
+- 组件层。
+- 样式层。
+- fixtures。
+- normal、loading、empty、error、success/toast 状态。
+- README 或运行说明。
+- 构建或打开方式。
+
+默认完整项目为 React + TypeScript + Vite + Material UI + CSS variables；用户明确要求 plain React 时才改为 React + CSS variables。

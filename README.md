@@ -1,64 +1,59 @@
 # video-community-ui-design-skill
 
-`video-community-ui-design-skill` 是一套面向 AI agent 的视频社区 UI 设计 skill。它把轻盈内容平台的视觉语言、布局语法、组件配方、交互状态、响应式规则、内容节奏和质量检查组织成可直接读取的 Markdown 与 JSON 文件。
+`video-community-ui-design-skill` 是一套面向 AI agent 的视频社区 UI 设计 skill。它把浅底樱粉、固定窄轨、装饰 masthead、分类横栏、公告信息条、媒体卡片流、移动顶部栏与底部导航组织成可执行的 Markdown、JSON、模板资产和质量检查。
 
-## 能解决的问题
+## 能解决什么问题
 
-- 为视频社区、内容发现、产品介绍和移动端页面生成统一 UI 规范。
-- 为内容卡片、导航、公告、CTA、表单、弹层、toast 和状态反馈生成可复用规则。
-- 为 HTML/CSS、React、Vue、Tailwind、Figma prompt 和 design spec 输出统一设计约束。
-- 为完整前端项目输出可运行目录、入口文件、组件层、样式层、fixtures、状态分支和运行说明。
-- 在缺少完整文案或媒体时，提供中性占位、比例盒、alt、空状态和错误状态规则。
+- 为视频社区、内容发现、媒体产品和移动浏览页面生成统一 UI 规范。
+- 为 BrandHeader、DecorativeMasthead、SidebarRail、CategoryTabs、AnnouncementBar、MediaFeedSection、MediaCard、BottomNav、Toast 和状态页生成可复用规则。
+- 为 HTML/CSS、React MUI、plain React、Vue、Tailwind、Figma prompt 和完整前端项目提供输出约束。
+- React MUI 输出必须使用真实 `@mui/material` 通用库；静态 HTML/CSS 只是零依赖 fallback，不冒充 Material UI。
+- 让不同 agent 在没有专用插件时也能按文件顺序读取并执行。
 
 ## 适合生成的页面
 
 - 视频社区首页
 - 内容发现页
-- 频道页或合集页
+- 创作者内容页
+- 媒体产品 landing page
 - 产品介绍区
-- 轻量 landing page
-- 企业展示页
-- 移动端内容页面
+- 移动端内容浏览页
 - 组件库规范
+- 完整前端项目
 
-## AI agent 使用方式
+## 如何被 AI Agent 使用
 
-1. 先读取 `SKILL.md`。
-2. 按任务类型读取 `design-tokens.json`、`style-profile.md`、`layout-patterns.md` 和 `component-recipes.md`。
-3. 继续读取交互、响应式、内容和适配规则。
-4. 根据 `output-modes.md` 选择输出形式。
-5. 完整前端项目再读取 `frontend-project-rules.md` 与 `assets/frontend-template/` 或 `assets/static-template/`。
-6. 使用 `validation-checklist.md` 做最终检查。
+1. 读取 `SKILL.md` 的触发、输入、输出和运行流程。
+2. 读取 `design-tokens.json` 建立 token。
+3. 读取 `style-profile.md`、`layout-patterns.md`、`component-recipes.md`。
+4. 读取 `interaction-rules.md`、`responsive-rules.md`、`content-rules.md`。
+5. 按输出目标读取 `output-modes.md`。
+6. 完整前端项目再读取 `frontend-project-rules.md` 与 `assets/frontend-template/` 或 `assets/static-template/`。
+7. 生成后运行 `validation-checklist.md` 和脚本检查。
 
-## 安装与发现
+## 输入参数
 
-- `SKILL.md` 提供 Codex skill 的触发名称和描述。
-- `agents/openai.yaml` 提供 UI 列表、技能卡片和默认 prompt 元数据。
-- 当前仓库可作为独立 skill 文件夹复制或同步到 Codex skills 目录。
+- `page_type`: `homepage`、`discovery`、`landing`、`product-section`、`mobile-page`、`component-spec`、`design-tokens`。
+- `audience`: 用户群体与使用场景。
+- `content_model`: 内容字段、分类、状态和排序。
+- `brand_overrides`: 主色、字体、圆角、密度、装饰强度、动效强度。
+- `tech_stack`: `html-css`、`react`、`react-mui`、`vue`、`tailwind`、`figma-prompt`、`spec`。
+- `output_mode`: `spec`、`html-css`、`react`、`vue`、`tailwind`、`figma-prompt`、`frontend-project`、`mui-frontend-project`。
 
-## 输入参数准备
-
-- `page_type`: 页面类型。
-- `audience`: 用户群体。
-- `content_model`: 内容对象与字段。
-- `brand_overrides`: 主色、字体、密度、圆角和动效强度。
-- `tech_stack`: 目标技术栈。
-- `output_mode`: 输出形式。
-- `accessibility_level`: 可访问性等级，默认 WCAG AA。
-
-## 输出结果
+## 输出形态
 
 - UI design spec
-- HTML/CSS
-- React 组件
-- Vue 组件
-- Tailwind 实现
+- HTML / CSS
+- React MUI
+- Plain React
+- Vue
+- Tailwind
 - Figma prompt
 - Wireframe outline
 - Component library spec
 - Landing page structure
 - Responsive layout plan
-- Frontend project scaffold
+- Full frontend project
 
 ## 文件结构
 
@@ -83,52 +78,94 @@
 ├── runtime-decision-tree.md
 ├── output-modes.md
 ├── validation-checklist.md
-├── assets/
-│   ├── frontend-template/
-│   └── static-template/
-└── examples/
-    ├── landing-page.md
-    ├── corporate-homepage.md
-    ├── product-section.md
-    ├── mobile-page.md
-    ├── frontend-project.md
-    └── forward-tests/
+├── examples/
+│   ├── landing-page.md
+│   ├── corporate-homepage.md
+│   ├── product-section.md
+│   ├── mobile-page.md
+│   ├── frontend-project.md
+│   └── forward-tests/
+└── assets/
+    ├── frontend-template/
+    └── static-template/
 ```
 
-## 验证命令
+## 核心设计语言
 
-```bash
+- 白色或近白色基底。
+- 樱粉主色与浅粉雾面。
+- 56px 桌面固定窄轨。
+- 移动 56px 顶部栏和 56px 底部导航。
+- 中心字标式 masthead。
+- 斜向色带、星形、十字点阵和三角几何。
+- 分类 tabs、公告信息条和内容流优先。
+- 16:9 媒体卡片、两行标题和稳定元信息。
+- 轻玻璃、低圆角、轻阴影、弹性微动效。
+
+## 如何扩展或替换风格
+
+- 改主色时同步更新 `color.brand.*`、focus、shadow、decoration 和 selected states。
+- 改字体时保持无衬线、跨语言可读和字标可访问。
+- 改圆角时保持 badge 4px、卡片/公告/弹层 4px 到 8px。
+- 改装饰强度时保留 masthead、斜向色带和至少一种几何装饰。
+- 改密度时保留媒体比例、卡片元信息顺序、移动触控目标和底部导航安全区。
+
+## 如何更新 Design Tokens
+
+1. 修改 `design-tokens.json`。
+2. 同步 `assets/frontend-template/src/styles/tokens.css`。
+3. 同步 `assets/static-template/styles/tokens.css`。
+4. 检查组件样式是否仍使用 token 变量。
+5. 运行质量检查脚本。
+
+## 如何更新 Component Recipes
+
+1. 修改 `component-recipes.md` 中对应组件。
+2. 同步 `frontend-project-rules.md` 的项目结构。
+3. 同步 React 与静态模板中的组件。
+4. 更新 examples 和 prompt templates。
+5. 运行完整验证。
+
+## 质量检查
+
+包级校验脚本位于 `scripts/validate_skill_package.py`。
+
+```powershell
 python -X utf8 "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_validate.py" .
 python -X utf8 scripts\validate_skill_package.py .
 git diff --check
 ```
 
-`scripts/validate_skill_package.py` 会检查 frontmatter、`agents/openai.yaml`、`design-tokens.json`、必备 Markdown、examples、模板入口和发布态清洁度。
+React MUI 模板检查：
+
+```powershell
+cd assets\frontend-template
+npm install
+npm run build
+```
+
+静态模板检查：
+
+- 直接打开 `assets/static-template/index.html`，或使用本地静态服务器。
+- 检查 desktop、tablet、mobile 下 masthead、tabs、announcement、media feed、states、toast 和 bottom nav。
 
 ## 模板资产
 
-- `assets/frontend-template/`: React、TypeScript、Vite 和 CSS variables 项目起点，包含入口、组件、fixtures、状态分支和运行说明。
+- `assets/frontend-template/`: React、TypeScript、Vite、Material UI 和 CSS variables 项目起点，包含 MUI theme、入口、组件、fixtures、状态分支和运行说明。
 - `assets/static-template/`: HTML、CSS 和原生 JavaScript 起点，适合零依赖交付或静态页面生成。
-- 两套模板都使用中性 fixtures、可替换媒体占位、focus-visible、reduced motion、loading、empty、error 和 success 状态。
 
-## 前向测试
+## Agent Metadata
 
-`examples/forward-tests/` 保存最小测试 prompt，用于检查该 skill 在真实调用中的稳定性：
+- `agents/openai.yaml` 提供 UI 展示名称、短说明、品牌色和默认调用提示。
 
-- `examples/frontend-project.md`
-- `design-spec-prompt.md`
-- `react-project-prompt.md`
-- `static-html-prompt.md`
+## Forward Tests
 
-## 扩展方式
+- `examples/frontend-project.md` 展示完整前端项目生成方式。
+- `examples/forward-tests/` 提供独立任务提示，用于检查该 skill 是否能生成规范、React 项目和静态页面。
 
-- 更新视觉风格时，先改 `design-tokens.json`，再同步 `style-profile.md`。
-- 更新布局能力时，改 `layout-patterns.md` 并补充 `responsive-rules.md`。
-- 更新组件时，改 `component-recipes.md` 并保持状态、响应式和可访问性字段完整。
-- 更新完整项目生成能力时，改 `frontend-project-rules.md`、`assets/frontend-template/`、`assets/static-template/`，并同步 `output-modes.md` 与 `prompt-templates.md`。
-- 更新提示词时，改 `prompt-templates.md` 并保持中性占位文案。
-- 每次更新后运行 `validation-checklist.md` 中的检查项和仓库验证命令。
+## 维护规则
 
-## 质量要求
-
-所有生成结果必须具备轻盈浅色基底、柔和强调色、低圆角、内容优先卡片、清晰导航、可关闭动效、键盘可操作、移动端可读和可替换文案。发布态文件必须只保留独立设计系统规则。
+- 保持 `SKILL.md` 短而可触发，细节放入模块文件。
+- 保持 token、组件、模板、示例和检查清单同步。
+- 不写入专有图片、专有图标、真实人物、真实机构、真实产品或真实业务数据。
+- 完整项目模板必须能展示正常、loading、empty、error 和 success/toast 状态。

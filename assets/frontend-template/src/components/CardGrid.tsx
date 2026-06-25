@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import type { MediaItem } from "../data/fixtures";
 import { MediaCard } from "./MediaCard";
 import { StateBlock } from "./StateBlock";
@@ -12,10 +13,24 @@ export function CardGrid({ items }: CardGridProps) {
   }
 
   return (
-    <section className="card-grid" aria-label="Video cards">
+    <Box
+      component="section"
+      aria-label="Media cards"
+      sx={{
+        display: "grid",
+        gridTemplateColumns: {
+          xs: "repeat(2, minmax(0, 1fr))",
+          sm: "repeat(auto-fit, minmax(var(--grid-feed-min), 1fr))",
+        },
+        gap: {
+          xs: "14px",
+          sm: "var(--grid-feed-gap)",
+        },
+      }}
+    >
       {items.map((item) => (
         <MediaCard key={item.id} item={item} />
       ))}
-    </section>
+    </Box>
   );
 }

@@ -1,0 +1,19 @@
+@keyframes demo8-danmaku-float {
+  from {
+    transform: translateX(18%);
+  }
+  to {
+    transform: translateX(-112%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

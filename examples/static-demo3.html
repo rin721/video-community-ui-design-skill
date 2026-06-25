@@ -1,0 +1,1396 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Static Demo 3 - Generic Static Media Community</title>
+  <style>
+    :root {
+      --color-brand-primary: rgb(240, 110, 142);
+      --color-brand-hover: rgb(238, 94, 131);
+      --color-brand-pressed: rgb(217, 79, 115);
+      --color-brand-soft: rgb(253, 232, 239);
+      --color-brand-mist: rgb(255, 246, 249);
+      --color-surface-page: rgb(255, 253, 254);
+      --color-surface-card: rgba(255, 255, 255, .82);
+      --color-surface-glass: rgba(255, 255, 255, .78);
+      --color-surface-inset: rgba(34, 32, 36, .045);
+      --color-text-strong: rgb(33, 33, 33);
+      --color-text-muted: rgb(105, 96, 103);
+      --color-text-soft: rgb(148, 136, 143);
+      --color-border-subtle: rgba(34, 32, 36, .08);
+      --color-focus-ring: rgba(240, 110, 142, .42);
+      --shadow-card-soft: 0 2px 6px rgba(116, 92, 104, .18), 0 0 4px rgba(116, 92, 104, .08);
+      --shadow-nav-glow: 0 0 24px rgba(240, 110, 142, .24);
+      --shadow-elevated: 0 8px 16px rgba(116, 92, 104, .18);
+      --font-family-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-size-body: 14px;
+      --font-size-caption: 12px;
+      --font-size-section: 20px;
+      --font-size-wordmark: 58px;
+      --font-size-mobile-wordmark: 20px;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --font-weight-brand: 800;
+      --line-height-body: 1.45;
+      --spacing-1: 4px;
+      --spacing-2: 8px;
+      --spacing-3: 12px;
+      --spacing-4: 16px;
+      --spacing-5: 20px;
+      --spacing-6: 24px;
+      --spacing-8: 32px;
+      --radius-badge: 999px;
+      --radius-card: 6px;
+      --radius-round: 999px;
+      --size-nav-rail: 56px;
+      --size-nav-mobile: 56px;
+      --size-control-icon: 40px;
+      --size-control-action: 48px;
+      --size-touch-min: 44px;
+      --layout-masthead-height: 140px;
+      --layout-category-height: 48px;
+      --layout-announcement-min-height: 78px;
+      --container-content-max: 1189px;
+      --container-content-padding-desktop: 68px;
+      --container-content-padding-mobile: 16px;
+      --grid-feed-min: 238px;
+      --grid-feed-gap: 16px;
+      --grid-media-cover-width: 220px;
+      --grid-media-aspect: 16 / 9;
+      --decoration-stripe-width: 118px;
+      --motion-duration-instant: 100ms;
+      --motion-duration-fast: 250ms;
+      --motion-duration-medium: 600ms;
+      --motion-duration-loading: 2000ms;
+      --motion-easing-standard: cubic-bezier(.19, 1, .22, 1);
+      --motion-easing-progress: cubic-bezier(.1, .9, .2, 1);
+      --motion-transform-card-hover: translateY(-2px);
+      --motion-transform-media-hover: scale(1.012);
+      --motion-transform-press-scale: scale(.972);
+      --z-index-nav: 20;
+      --z-index-overlay: 50;
+      --z-index-toast: 80;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      color-scheme: light;
+      font-size: var(--font-size-body);
+    }
+
+    body {
+      margin: 0;
+      background: var(--color-surface-page);
+      color: var(--color-text-strong);
+      font-family: var(--font-family-body);
+      line-height: var(--line-height-body);
+      overflow-x: hidden;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    svg {
+      display: block;
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--color-focus-ring);
+      outline-offset: 3px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .vc-progress {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: var(--z-index-toast);
+      height: 3px;
+      pointer-events: none;
+      opacity: 0;
+      transform-origin: left;
+      background: var(--color-brand-primary);
+      transform: scaleX(.08);
+      transition: opacity var(--motion-duration-fast) var(--motion-easing-standard);
+    }
+
+    .vc-progress.is-active {
+      opacity: 1;
+      animation: vc-progress var(--motion-duration-loading) var(--motion-easing-progress) infinite;
+    }
+
+    .vc-app-shell {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 17% 12%, rgba(240, 110, 142, .08), transparent 24%),
+        linear-gradient(90deg, rgba(240, 110, 142, .035), transparent 24%),
+        var(--color-surface-page);
+    }
+
+    .vc-rail {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: var(--z-index-nav);
+      display: flex;
+      width: var(--size-nav-rail);
+      padding: var(--spacing-2) 0;
+      flex-direction: column;
+      align-items: center;
+      background: var(--color-surface-glass);
+      box-shadow: var(--shadow-nav-glow);
+      backdrop-filter: blur(16px);
+    }
+
+    .vc-rail-group {
+      display: grid;
+      gap: var(--spacing-2);
+      justify-items: center;
+    }
+
+    .vc-rail-brand {
+      position: relative;
+      display: grid;
+      flex: 1;
+      place-items: center;
+      width: 100%;
+      color: var(--color-brand-primary);
+      font-weight: var(--font-weight-brand);
+      letter-spacing: 0;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    .vc-rail-brand::before,
+    .vc-rail-brand::after {
+      position: absolute;
+      content: "";
+      left: 22px;
+      width: 18px;
+      height: 8px;
+      border-radius: 2px;
+      background: rgba(240, 110, 142, .25);
+      transform: skewY(-28deg);
+    }
+
+    .vc-rail-brand::before {
+      top: 70px;
+      box-shadow: 0 16px 0 rgba(240, 110, 142, .18);
+    }
+
+    .vc-rail-brand::after {
+      bottom: 80px;
+      box-shadow: 0 -16px 0 rgba(240, 110, 142, .18);
+    }
+
+    .vc-soft-icon-button {
+      position: relative;
+      display: inline-grid;
+      width: var(--size-control-icon);
+      height: var(--size-control-icon);
+      place-items: center;
+      overflow: hidden;
+      border-radius: var(--radius-round);
+      background: transparent;
+      color: var(--color-text-muted);
+      transition:
+        color var(--motion-duration-fast) var(--motion-easing-standard),
+        background-color var(--motion-duration-fast) var(--motion-easing-standard),
+        transform var(--motion-duration-fast) var(--motion-easing-standard);
+    }
+
+    .vc-soft-icon-button:hover,
+    .vc-soft-icon-button[aria-current="page"],
+    .vc-soft-icon-button.is-active {
+      background: var(--color-brand-soft);
+      color: var(--color-brand-primary);
+    }
+
+    .vc-soft-icon-button:active {
+      transform: var(--motion-transform-press-scale);
+    }
+
+    .vc-soft-icon-button[aria-current="page"]::before {
+      position: absolute;
+      left: -10px;
+      width: 4px;
+      height: 18px;
+      border-radius: var(--radius-badge);
+      background: var(--color-brand-primary);
+      content: "";
+    }
+
+    .vc-topbar,
+    .vc-bottom-nav {
+      display: none;
+    }
+
+    .vc-main {
+      min-height: 100vh;
+      padding-left: var(--size-nav-rail);
+    }
+
+    .vc-masthead {
+      position: relative;
+      display: grid;
+      height: var(--layout-masthead-height);
+      overflow: hidden;
+      place-items: center;
+      border-bottom: 1px solid rgba(240, 110, 142, .06);
+      background:
+        radial-gradient(circle at 74% 28%, rgba(240, 110, 142, .09), transparent 11%),
+        radial-gradient(circle at 22% 50%, rgba(240, 110, 142, .06), transparent 17%),
+        linear-gradient(180deg, rgba(255, 246, 249, .88), rgba(255, 255, 255, .72));
+    }
+
+    .vc-masthead::before {
+      position: absolute;
+      right: 155px;
+      top: -38px;
+      width: 640px;
+      height: 86px;
+      border-radius: var(--radius-badge);
+      background: rgba(240, 110, 142, .18);
+      content: "";
+      transform: rotate(-13deg);
+    }
+
+    .vc-masthead::after {
+      position: absolute;
+      right: 34px;
+      top: 20px;
+      width: 92px;
+      height: 92px;
+      background-image: radial-gradient(circle, rgba(240, 110, 142, .42) 1.4px, transparent 1.5px);
+      background-size: 14px 14px;
+      content: "";
+      opacity: .8;
+    }
+
+    .vc-wordmark {
+      position: relative;
+      z-index: 1;
+      color: var(--color-brand-primary);
+      font-size: var(--font-size-wordmark);
+      font-weight: var(--font-weight-brand);
+      letter-spacing: 0;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .vc-wordmark::before {
+      content: "+";
+      margin-right: var(--spacing-3);
+      font-size: 28px;
+      vertical-align: .4em;
+    }
+
+    .vc-wordmark small {
+      display: block;
+      margin-top: var(--spacing-3);
+      color: var(--color-text-muted);
+      font-size: var(--font-size-caption);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .vc-tabs {
+      display: flex;
+      height: var(--layout-category-height);
+      align-items: stretch;
+      justify-content: center;
+      gap: var(--spacing-2);
+      border-bottom: 1px solid var(--color-border-subtle);
+      background: rgba(255, 255, 255, .7);
+    }
+
+    .vc-tab {
+      position: relative;
+      min-width: 64px;
+      padding: 0 var(--spacing-4);
+      background: transparent;
+      color: var(--color-text-strong);
+      font-weight: var(--font-weight-semibold);
+      transition:
+        color var(--motion-duration-fast) var(--motion-easing-standard),
+        transform var(--motion-duration-fast) var(--motion-easing-standard);
+    }
+
+    .vc-tab:hover,
+    .vc-tab[aria-selected="true"] {
+      color: var(--color-brand-primary);
+    }
+
+    .vc-tab[aria-selected="true"]::after {
+      position: absolute;
+      right: var(--spacing-4);
+      bottom: 0;
+      left: var(--spacing-4);
+      height: 3px;
+      border-radius: var(--radius-badge) var(--radius-badge) 0 0;
+      background: var(--color-brand-primary);
+      content: "";
+    }
+
+    .vc-tab:active {
+      transform: var(--motion-transform-press-scale);
+    }
+
+    .vc-content {
+      width: min(var(--container-content-max), calc(100vw - var(--size-nav-rail) - var(--container-content-padding-desktop) * 2));
+      margin: 0 auto;
+      padding: var(--spacing-5) 0 var(--spacing-8);
+    }
+
+    .vc-announcement {
+      display: grid;
+      min-height: var(--layout-announcement-min-height);
+      grid-template-columns: var(--size-control-icon) minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--spacing-4);
+      padding: var(--spacing-4);
+      border: 1px solid rgba(240, 110, 142, .18);
+      border-radius: var(--radius-card);
+      background: var(--color-surface-card);
+      box-shadow: var(--shadow-card-soft);
+    }
+
+    .vc-announcement-icon {
+      display: grid;
+      width: var(--size-control-icon);
+      height: var(--size-control-icon);
+      place-items: center;
+      border-radius: var(--radius-round);
+      background: var(--color-brand-soft);
+      color: var(--color-brand-primary);
+      font-weight: var(--font-weight-brand);
+    }
+
+    .vc-announcement h2,
+    .vc-announcement p {
+      margin: 0;
+    }
+
+    .vc-announcement h2 {
+      font-size: 14px;
+    }
+
+    .vc-announcement p {
+      color: var(--color-text-muted);
+      font-size: var(--font-size-caption);
+    }
+
+    .vc-pill-button {
+      min-height: 34px;
+      padding: 0 var(--spacing-4);
+      border-radius: var(--radius-badge);
+      background: var(--color-brand-primary);
+      color: white;
+      font-weight: var(--font-weight-semibold);
+      transition:
+        background-color var(--motion-duration-fast) var(--motion-easing-standard),
+        transform var(--motion-duration-fast) var(--motion-easing-standard);
+    }
+
+    .vc-pill-button:hover {
+      background: var(--color-brand-hover);
+    }
+
+    .vc-pill-button:active {
+      transform: var(--motion-transform-press-scale);
+    }
+
+    .vc-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: var(--spacing-5) 0 var(--spacing-3);
+    }
+
+    .vc-section-head h2 {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-2);
+      margin: 0;
+      font-size: var(--font-size-section);
+      line-height: 1.15;
+    }
+
+    .vc-section-head h2::before {
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-round);
+      background:
+        linear-gradient(135deg, transparent 42%, var(--color-brand-primary) 43% 58%, transparent 59%),
+        var(--color-brand-soft);
+      content: "";
+    }
+
+    .vc-count-badge {
+      display: inline-grid;
+      min-width: 20px;
+      height: 20px;
+      place-items: center;
+      border-radius: var(--radius-badge);
+      background: var(--color-brand-soft);
+      color: var(--color-brand-primary);
+      font-size: var(--font-size-caption);
+      font-weight: var(--font-weight-brand);
+    }
+
+    .vc-sort-note {
+      color: var(--color-text-muted);
+      font-size: var(--font-size-caption);
+    }
+
+    .vc-thumb-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0;
+      margin: 0 calc(var(--spacing-2) * -1);
+    }
+
+    .vc-media-card {
+      position: relative;
+      display: flex;
+      min-width: 0;
+      padding: var(--spacing-2);
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: var(--radius-card);
+      background: transparent;
+      outline: 0;
+      cursor: pointer;
+      transition:
+        background-color var(--motion-duration-fast) var(--motion-easing-standard),
+        filter var(--motion-duration-fast) var(--motion-easing-standard);
+    }
+
+    .vc-media-card:hover {
+      background: rgba(240, 110, 142, .035);
+    }
+
+    .vc-media-card:active {
+      filter: brightness(.985);
+    }
+
+    .vc-media-card:focus-visible {
+      box-shadow: 0 0 0 3px var(--color-focus-ring);
+    }
+
+    .vc-media-cover {
+      position: relative;
+      width: 100%;
+      max-width: var(--grid-media-cover-width);
+      aspect-ratio: var(--grid-media-aspect);
+      overflow: hidden;
+      border-radius: var(--radius-card);
+      background:
+        radial-gradient(circle at 20% 72%, rgba(255, 255, 255, .68) 0 10%, transparent 11%),
+        radial-gradient(circle at 73% 27%, rgba(255, 255, 255, .45) 0 13%, transparent 14%),
+        linear-gradient(118deg, rgba(255, 255, 255, .52) 0 18%, transparent 19% 28%, rgba(255, 255, 255, .32) 29% 35%, transparent 36%),
+        linear-gradient(135deg, rgb(252, 199, 209), rgb(239, 164, 198) 48%, rgb(181, 216, 230));
+      box-shadow: inset 0 0 38px rgba(255, 255, 255, .55);
+      transform-origin: center;
+      transition:
+        transform var(--motion-duration-fast) var(--motion-easing-standard),
+        filter var(--motion-duration-fast) var(--motion-easing-standard);
+    }
+
+    .vc-media-card:hover .vc-media-cover,
+    .vc-media-card.is-active .vc-media-cover {
+      transform: var(--motion-transform-media-hover);
+    }
+
+    .vc-media-card:hover .vc-media-title {
+      color: var(--color-brand-hover);
+    }
+
+    .vc-media-cover::after {
+      position: absolute;
+      right: 14px;
+      bottom: -12px;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .48);
+      content: "";
+      transform: rotate(-11deg);
+    }
+
+    .vc-media-card[data-tone="gold"] .vc-media-cover {
+      filter: hue-rotate(28deg) saturate(.92);
+    }
+
+    .vc-media-card[data-tone="blue"] .vc-media-cover {
+      filter: hue-rotate(165deg) saturate(.72);
+    }
+
+    .vc-media-card[data-tone="mint"] .vc-media-cover {
+      filter: hue-rotate(92deg) saturate(.72);
+    }
+
+    .vc-media-card[data-tone="violet"] .vc-media-cover {
+      filter: hue-rotate(235deg) saturate(.82);
+    }
+
+    .vc-duration {
+      position: absolute;
+      right: var(--spacing-2);
+      bottom: var(--spacing-2);
+      z-index: 1;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: rgba(34, 32, 36, .56);
+      color: white;
+      font-size: var(--font-size-caption);
+      font-weight: var(--font-weight-semibold);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .vc-media-body {
+      padding: var(--spacing-2) var(--spacing-1) 0;
+    }
+
+    .vc-media-title {
+      display: -webkit-box;
+      min-height: 40px;
+      margin: 0;
+      overflow: hidden;
+      color: var(--color-text-strong);
+      font-size: 14px;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0;
+      line-height: 1.42;
+      transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .vc-author {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 22px;
+      margin-top: var(--spacing-1);
+      padding: 0;
+      background: transparent;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-caption);
+    }
+
+    .vc-author::before {
+      width: 13px;
+      height: 13px;
+      border: 1.5px solid currentColor;
+      border-radius: var(--radius-round);
+      box-shadow: 0 6px 0 -4px currentColor;
+      content: "";
+      opacity: .78;
+    }
+
+    .vc-author:hover {
+      color: var(--color-brand-hover);
+      text-decoration: underline;
+    }
+
+    .vc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 1px;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-caption);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .vc-ripple {
+      position: absolute;
+      z-index: 2;
+      width: 16px;
+      height: 16px;
+      border-radius: var(--radius-round);
+      pointer-events: none;
+      background: rgba(240, 110, 142, .2);
+      transform: translate(-50%, -50%) scale(0);
+      animation: vc-ripple var(--motion-duration-medium) var(--motion-easing-standard);
+    }
+
+    .vc-state-preview {
+      margin-top: var(--spacing-8);
+      padding-top: var(--spacing-6);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .vc-state-preview h2 {
+      margin: 0 0 var(--spacing-3);
+      font-size: 18px;
+    }
+
+    .vc-state-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-2);
+    }
+
+    .vc-state-card {
+      display: none;
+      min-height: 112px;
+      margin-top: var(--spacing-4);
+      padding: var(--spacing-4);
+      border-radius: var(--radius-card);
+      background: var(--color-surface-card);
+      box-shadow: var(--shadow-card-soft);
+    }
+
+    .vc-state-card.is-visible {
+      display: block;
+    }
+
+    .vc-skeleton-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--grid-feed-gap);
+    }
+
+    .vc-skeleton-cover {
+      aspect-ratio: var(--grid-media-aspect);
+      border-radius: var(--radius-card);
+      background: linear-gradient(90deg, rgba(240, 110, 142, .08), rgba(255, 255, 255, .8), rgba(240, 110, 142, .08));
+      background-size: 240% 100%;
+      animation: vc-shimmer 1.4s var(--motion-easing-standard) infinite;
+    }
+
+    .vc-search-panel,
+    .vc-drawer {
+      position: fixed;
+      z-index: var(--z-index-overlay);
+      border-radius: var(--radius-card);
+      background: var(--color-surface-card);
+      box-shadow: var(--shadow-elevated);
+      backdrop-filter: blur(18px);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition:
+        opacity var(--motion-duration-fast) var(--motion-easing-standard),
+        transform var(--motion-duration-fast) var(--motion-easing-standard);
+    }
+
+    .vc-search-panel.is-open,
+    .vc-drawer.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .vc-search-panel {
+      top: 72px;
+      right: 28px;
+      width: min(560px, calc(100vw - 96px));
+      padding: var(--spacing-4);
+    }
+
+    .vc-search-row {
+      display: grid;
+      grid-template-columns: 1fr var(--size-control-icon);
+      gap: var(--spacing-2);
+      align-items: center;
+    }
+
+    .vc-search-row input {
+      height: var(--size-touch-min);
+      min-width: 0;
+      padding: 0 var(--spacing-3);
+      border: 1px solid transparent;
+      border-radius: var(--radius-card);
+      background: var(--color-surface-inset);
+      color: var(--color-text-strong);
+    }
+
+    .vc-search-row input:focus {
+      border-color: var(--color-brand-primary);
+      outline: 0;
+      box-shadow: 0 0 0 3px var(--color-focus-ring);
+    }
+
+    .vc-filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-2);
+      margin-bottom: var(--spacing-3);
+    }
+
+    .vc-filter-pill {
+      min-height: 31px;
+      padding: 0 var(--spacing-3);
+      border-radius: var(--radius-badge);
+      background: var(--color-surface-inset);
+      color: var(--color-text-muted);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .vc-filter-pill[aria-pressed="true"] {
+      background: var(--color-brand-primary);
+      color: white;
+    }
+
+    .vc-drawer {
+      top: var(--spacing-4);
+      left: var(--spacing-4);
+      width: min(300px, calc(100vw - 32px));
+      padding: var(--spacing-4);
+    }
+
+    .vc-drawer h2 {
+      margin: 0 0 var(--spacing-3);
+    }
+
+    .vc-drawer-list {
+      display: grid;
+      gap: var(--spacing-2);
+    }
+
+    .vc-drawer-list button {
+      min-height: var(--size-touch-min);
+      border-radius: var(--radius-card);
+      background: transparent;
+      color: var(--color-text-strong);
+      text-align: left;
+    }
+
+    .vc-toast {
+      position: fixed;
+      right: var(--spacing-5);
+      bottom: var(--spacing-5);
+      z-index: var(--z-index-toast);
+      display: grid;
+      min-width: min(320px, calc(100vw - 40px));
+      max-width: calc(100vw - 40px);
+      grid-template-columns: 1fr auto;
+      gap: var(--spacing-3);
+      align-items: center;
+      padding: var(--spacing-3) var(--spacing-4);
+      overflow: hidden;
+      border: 1px solid rgba(240, 110, 142, .18);
+      border-radius: var(--radius-card);
+      background: var(--color-surface-card);
+      box-shadow: var(--shadow-elevated);
+      color: var(--color-text-strong);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition:
+        opacity var(--motion-duration-fast) var(--motion-easing-standard),
+        transform var(--motion-duration-fast) var(--motion-easing-standard);
+    }
+
+    .vc-toast.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .vc-toast::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: var(--color-brand-primary);
+      content: "";
+      transform-origin: left;
+      animation: vc-toast-progress var(--motion-duration-loading) linear forwards;
+    }
+
+    .vc-toast button {
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-round);
+      background: var(--color-brand-soft);
+      color: var(--color-brand-primary);
+    }
+
+    @keyframes vc-progress {
+      0% { transform: scaleX(.08); }
+      55% { transform: scaleX(.72); }
+      100% { transform: scaleX(.96); }
+    }
+
+    @keyframes vc-ripple {
+      to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(18);
+      }
+    }
+
+    @keyframes vc-shimmer {
+      to {
+        background-position: -240% 0;
+      }
+    }
+
+    @keyframes vc-toast-progress {
+      from { transform: scaleX(1); }
+      to { transform: scaleX(0); }
+    }
+
+    @media (max-width: 1180px) {
+      .vc-thumb-grid,
+      .vc-skeleton-row {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 920px) {
+      .vc-thumb-grid,
+      .vc-skeleton-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 639px) {
+      :root {
+        --font-size-section: 20px;
+        --grid-feed-gap: 12px;
+      }
+
+      .vc-rail,
+      .vc-masthead,
+      .vc-tabs {
+        display: none;
+      }
+
+      .vc-topbar {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: var(--z-index-nav);
+        display: flex;
+        height: var(--size-nav-mobile);
+        align-items: center;
+        gap: var(--spacing-2);
+        padding: 0 var(--container-content-padding-mobile);
+        background: var(--color-surface-glass);
+        box-shadow: var(--shadow-nav-glow);
+        backdrop-filter: blur(16px);
+      }
+
+      .vc-topbar .vc-soft-icon-button {
+        width: var(--size-touch-min);
+        height: var(--size-touch-min);
+        flex: 0 0 auto;
+      }
+
+      .vc-mobile-wordmark {
+        color: var(--color-brand-primary);
+        font-size: var(--font-size-mobile-wordmark);
+        font-weight: var(--font-weight-brand);
+        letter-spacing: 0;
+      }
+
+      .vc-bottom-nav {
+        position: fixed;
+        inset: auto 0 0;
+        z-index: var(--z-index-nav);
+        display: grid;
+        height: calc(var(--size-nav-mobile) + env(safe-area-inset-bottom, 0px));
+        grid-template-columns: repeat(4, 1fr);
+        align-items: center;
+        padding: 0 var(--spacing-2) env(safe-area-inset-bottom, 0px);
+        background: var(--color-surface-glass);
+        box-shadow: 0 -8px 24px rgba(240, 110, 142, .14);
+        backdrop-filter: blur(16px);
+      }
+
+      .vc-bottom-nav button {
+        display: grid;
+        min-height: var(--size-touch-min);
+        place-items: center;
+        border-radius: var(--radius-card);
+        background: transparent;
+        color: var(--color-text-muted);
+        font-size: 11px;
+        font-weight: var(--font-weight-semibold);
+      }
+
+      .vc-bottom-nav button[aria-current="page"] {
+        color: var(--color-brand-primary);
+      }
+
+      .vc-main {
+        padding: var(--size-nav-mobile) 0 calc(var(--size-nav-mobile) + var(--spacing-4));
+      }
+
+      .vc-content {
+        width: 100%;
+        padding: var(--spacing-4) var(--container-content-padding-mobile) var(--spacing-6);
+      }
+
+      .vc-announcement {
+        grid-template-columns: var(--size-control-icon) minmax(0, 1fr);
+        align-items: start;
+        gap: var(--spacing-3);
+      }
+
+      .vc-announcement .vc-pill-button {
+        grid-column: 2;
+        justify-self: start;
+      }
+
+      .vc-section-head {
+        margin-top: var(--spacing-5);
+      }
+
+      .vc-sort-note {
+        display: none;
+      }
+
+      .vc-thumb-grid,
+      .vc-skeleton-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--grid-feed-gap);
+        margin: 0;
+      }
+
+      .vc-media-card {
+        padding: 0;
+      }
+
+      .vc-media-cover {
+        max-width: none;
+      }
+
+      .vc-media-body {
+        padding: var(--spacing-2) 0 0;
+      }
+
+      .vc-media-title {
+        min-height: 40px;
+        font-size: 13px;
+      }
+
+      .vc-search-panel {
+        inset: 68px var(--spacing-4) auto;
+        width: auto;
+      }
+
+      .vc-toast {
+        right: var(--spacing-4);
+        bottom: calc(var(--size-nav-mobile) + var(--spacing-3));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .001ms !important;
+      }
+
+      .vc-media-card:hover .vc-media-cover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="vc-progress" data-progress></div>
+  <div class="vc-app-shell">
+    <aside class="vc-rail" aria-label="桌面主导航">
+      <div class="vc-rail-group" role="toolbar" aria-label="主入口">
+        <button class="vc-soft-icon-button" type="button" aria-label="首页" aria-current="page" data-route="home">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M6.5 10.8V20h11v-9.2"/><path d="M10 20v-5h4v5"/></svg>
+        </button>
+        <button class="vc-soft-icon-button" type="button" aria-label="搜索" data-route="search">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m20 20-4.2-4.2"/><circle cx="10.5" cy="10.5" r="6.5"/></svg>
+        </button>
+        <button class="vc-soft-icon-button" type="button" aria-label="动态" data-route="feed">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h11"/><path d="M4 17h7"/></svg>
+        </button>
+      </div>
+      <div class="vc-rail-brand" aria-hidden="true">MEDIAKIT</div>
+      <div class="vc-rail-group" role="toolbar" aria-label="工具入口">
+        <button class="vc-soft-icon-button" type="button" aria-label="通知" data-route="notice">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"/><path d="M10 20h4"/></svg>
+        </button>
+        <button class="vc-soft-icon-button" type="button" aria-label="设置" data-route="settings">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a8 8 0 0 0 .1-6"/><path d="M4.5 9a8 8 0 0 0 .1 6"/><path d="M8 4.9a8 8 0 0 1 8 0"/><path d="M16 19.1a8 8 0 0 1-8 0"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <header class="vc-topbar" aria-label="移动顶部栏">
+      <button class="vc-soft-icon-button" type="button" aria-label="打开菜单" aria-expanded="false" data-drawer-toggle>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      </button>
+      <div class="vc-mobile-wordmark" aria-label="MediaKit">MEDIAKIT</div>
+      <button class="vc-soft-icon-button" type="button" aria-label="搜索" data-route="search">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m20 20-4.2-4.2"/><circle cx="10.5" cy="10.5" r="6.5"/></svg>
+      </button>
+    </header>
+
+    <main class="vc-main">
+      <section class="vc-masthead" aria-label="页面品牌区">
+        <h1 class="vc-wordmark">MEDIAKIT<small>Soft pink media community</small></h1>
+      </section>
+
+      <nav class="vc-tabs" role="tablist" aria-label="内容分类">
+        <button class="vc-tab" type="button" role="tab" aria-selected="true" data-tab="home">首页</button>
+        <button class="vc-tab" type="button" role="tab" aria-selected="false" data-tab="animation">动画</button>
+        <button class="vc-tab" type="button" role="tab" aria-selected="false" data-tab="music">音乐</button>
+        <button class="vc-tab" type="button" role="tab" aria-selected="false" data-tab="design">设计</button>
+        <button class="vc-tab" type="button" role="tab" aria-selected="false" data-tab="game">游戏</button>
+        <button class="vc-tab" type="button" role="tab" aria-selected="false" data-tab="mix">综合</button>
+      </nav>
+
+      <div class="vc-content">
+        <aside class="vc-announcement" role="status" aria-label="公告">
+          <div class="vc-announcement-icon" aria-hidden="true">i</div>
+          <div>
+            <h2>公告</h2>
+            <p>这个纯静态样例使用中性占位内容展示媒体社区首页结构，所有封面由 CSS 渐变和几何图形生成。</p>
+          </div>
+          <button class="vc-pill-button" type="button" data-toast="公告已确认">知道了</button>
+        </aside>
+
+        <section class="vc-feed" aria-labelledby="feed-heading">
+          <div class="vc-section-head">
+            <h2 id="feed-heading">最新 <span class="vc-count-badge">0</span></h2>
+            <span class="vc-sort-note">按发布时间排序</span>
+          </div>
+
+          <div class="vc-thumb-grid" data-grid>
+            <article class="vc-media-card" role="link" tabindex="0" data-card data-title="清晨频道的第一段短片与轻量剪辑实验" data-tone="rose" aria-label="打开视频：清晨频道的第一段短片与轻量剪辑实验">
+              <div class="vc-media-cover" role="img" aria-label="粉色几何短片占位封面"><span class="vc-duration">05:00</span></div>
+              <div class="vc-media-body">
+                <h3 class="vc-media-title">清晨频道的第一段短片与轻量剪辑实验</h3>
+                <button class="vc-author" type="button" data-author="示例创作者">示例创作者</button>
+                <div class="vc-meta"><span>0 views</span><span>08/07/2024</span></div>
+              </div>
+            </article>
+            <article class="vc-media-card" role="link" tabindex="0" data-card data-title="关于循环动画节奏和字幕密度的小型记录" data-tone="gold" aria-label="打开视频：关于循环动画节奏和字幕密度的小型记录">
+              <div class="vc-media-cover" role="img" aria-label="暖色动画占位封面"><span class="vc-duration">04:28</span></div>
+              <div class="vc-media-body">
+                <h3 class="vc-media-title">关于循环动画节奏和字幕密度的小型记录</h3>
+                <button class="vc-author" type="button" data-author="频道样例">频道样例</button>
+                <div class="vc-meta"><span>0 views</span><span>08/08/2024</span></div>
+              </div>
+            </article>
+            <article class="vc-media-card" role="link" tabindex="0" data-card data-title="两分钟拆解一个温柔的媒体卡片布局" data-tone="blue" aria-label="打开视频：两分钟拆解一个温柔的媒体卡片布局">
+              <div class="vc-media-cover" role="img" aria-label="蓝粉媒体占位封面"><span class="vc-duration">03:16</span></div>
+              <div class="vc-media-body">
+                <h3 class="vc-media-title">两分钟拆解一个温柔的媒体卡片布局</h3>
+                <button class="vc-author" type="button" data-author="界面观察员">界面观察员</button>
+                <div class="vc-meta"><span>0 views</span><span>08/09/2024</span></div>
+              </div>
+            </article>
+            <article class="vc-media-card" role="link" tabindex="0" data-card data-title="用几何色块替代真实封面的静态页面实验" data-tone="mint" aria-label="打开视频：用几何色块替代真实封面的静态页面实验">
+              <div class="vc-media-cover" role="img" aria-label="几何色块占位封面"><span class="vc-duration">06:40</span></div>
+              <div class="vc-media-body">
+                <h3 class="vc-media-title">用几何色块替代真实封面的静态页面实验</h3>
+                <button class="vc-author" type="button" data-author="静态工坊">静态工坊</button>
+                <div class="vc-meta"><span>0 views</span><span>08/10/2024</span></div>
+              </div>
+            </article>
+            <article class="vc-media-card" role="link" tabindex="0" data-card data-title="轻导航、粉色字标和内容网格如何共处" data-tone="violet" aria-label="打开视频：轻导航、粉色字标和内容网格如何共处">
+              <div class="vc-media-cover" role="img" aria-label="紫粉导航占位封面"><span class="vc-duration">05:12</span></div>
+              <div class="vc-media-body">
+                <h3 class="vc-media-title">轻导航、粉色字标和内容网格如何共处</h3>
+                <button class="vc-author" type="button" data-author="视觉练习室">视觉练习室</button>
+                <div class="vc-meta"><span>0 views</span><span>08/11/2024</span></div>
+              </div>
+            </article>
+            <article class="vc-media-card" role="link" tabindex="0" data-card data-title="移动端双列卡片在窄屏中的稳定呈现" data-tone="gold" aria-label="打开视频：移动端双列卡片在窄屏中的稳定呈现">
+              <div class="vc-media-cover" role="img" aria-label="移动双列占位封面"><span class="vc-duration">07:03</span></div>
+              <div class="vc-media-body">
+                <h3 class="vc-media-title">移动端双列卡片在窄屏中的稳定呈现</h3>
+                <button class="vc-author" type="button" data-author="响应式笔记">响应式笔记</button>
+                <div class="vc-meta"><span>0 views</span><span>08/12/2024</span></div>
+              </div>
+            </article>
+            <article class="vc-media-card" role="link" tabindex="0" data-card data-title="公告条与分类导航的首屏信息层级测试" data-tone="blue" aria-label="打开视频：公告条与分类导航的首屏信息层级测试">
+              <div class="vc-media-cover" role="img" aria-label="公告分类占位封面"><span class="vc-duration">02:55</span></div>
+              <div class="vc-media-body">
+                <h3 class="vc-media-title">公告条与分类导航的首屏信息层级测试</h3>
+                <button class="vc-author" type="button" data-author="内容样例">内容样例</button>
+                <div class="vc-meta"><span>0 views</span><span>08/13/2024</span></div>
+              </div>
+            </article>
+            <article class="vc-media-card" role="link" tabindex="0" data-card data-title="一个只有 CSS 封面的媒体发现页草图" data-tone="mint" aria-label="打开视频：一个只有 CSS 封面的媒体发现页草图">
+              <div class="vc-media-cover" role="img" aria-label="CSS 封面占位图"><span class="vc-duration">05:37</span></div>
+              <div class="vc-media-body">
+                <h3 class="vc-media-title">一个只有 CSS 封面的媒体发现页草图</h3>
+                <button class="vc-author" type="button" data-author="前端样例">前端样例</button>
+                <div class="vc-meta"><span>0 views</span><span>08/14/2024</span></div>
+              </div>
+            </article>
+            <article class="vc-media-card" role="link" tabindex="0" data-card data-title="从标签切换到 toast 状态的轻交互练习" data-tone="violet" aria-label="打开视频：从标签切换到 toast 状态的轻交互练习">
+              <div class="vc-media-cover" role="img" aria-label="交互练习占位封面"><span class="vc-duration">04:44</span></div>
+              <div class="vc-media-body">
+                <h3 class="vc-media-title">从标签切换到 toast 状态的轻交互练习</h3>
+                <button class="vc-author" type="button" data-author="交互样例">交互样例</button>
+                <div class="vc-meta"><span>0 views</span><span>08/15/2024</span></div>
+              </div>
+            </article>
+            <article class="vc-media-card" role="link" tabindex="0" data-card data-title="最新内容区的高度感但低干扰排列" data-tone="rose" aria-label="打开视频：最新内容区的高度感但低干扰排列">
+              <div class="vc-media-cover" role="img" aria-label="内容密度占位封面"><span class="vc-duration">06:08</span></div>
+              <div class="vc-media-body">
+                <h3 class="vc-media-title">最新内容区的高度感但低干扰排列</h3>
+                <button class="vc-author" type="button" data-author="排版样例">排版样例</button>
+                <div class="vc-meta"><span>0 views</span><span>08/16/2024</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="vc-state-preview" aria-labelledby="state-heading">
+          <h2 id="state-heading">状态预览</h2>
+          <div class="vc-state-actions" role="group" aria-label="切换状态">
+            <button class="vc-pill-button" type="button" data-state="normal">normal</button>
+            <button class="vc-pill-button" type="button" data-state="loading">loading</button>
+            <button class="vc-pill-button" type="button" data-state="empty">empty</button>
+            <button class="vc-pill-button" type="button" data-state="error">error</button>
+            <button class="vc-pill-button" type="button" data-state="success">success</button>
+          </div>
+          <div class="vc-state-card" data-state-card="loading">
+            <div class="vc-skeleton-row" aria-label="加载骨架">
+              <div class="vc-skeleton-cover"></div>
+              <div class="vc-skeleton-cover"></div>
+              <div class="vc-skeleton-cover"></div>
+              <div class="vc-skeleton-cover"></div>
+              <div class="vc-skeleton-cover"></div>
+            </div>
+          </div>
+          <div class="vc-state-card" data-state-card="empty"><strong>暂无内容</strong><p>可以切换分类、清除筛选，或稍后再刷新。</p></div>
+          <div class="vc-state-card" data-state-card="error"><strong>加载失败</strong><p>网络或数据源暂时不可用，请重试。</p></div>
+          <div class="vc-state-card" data-state-card="success"><strong>已完成</strong><p>状态反馈会通过 Snackbar/Toast anatomy 呈现。</p></div>
+        </section>
+      </div>
+    </main>
+
+    <nav class="vc-bottom-nav" aria-label="移动底部导航">
+      <button type="button" aria-current="page" data-route="home">首页</button>
+      <button type="button" data-route="category">分类</button>
+      <button type="button" data-route="feed">动态</button>
+      <button type="button" data-route="search">搜索</button>
+    </nav>
+  </div>
+
+  <aside class="vc-search-panel" aria-label="搜索面板" aria-hidden="true" data-search-panel>
+    <div class="vc-filter-pills" role="group" aria-label="搜索类型">
+      <button class="vc-filter-pill" type="button" aria-pressed="true">视频</button>
+      <button class="vc-filter-pill" type="button" aria-pressed="false">作者</button>
+      <button class="vc-filter-pill" type="button" aria-pressed="false">标签</button>
+    </div>
+    <div class="vc-search-row">
+      <label class="sr-only" for="demo-search">搜索关键词</label>
+      <input id="demo-search" type="search" placeholder="搜索中性示例内容">
+      <button class="vc-soft-icon-button" type="button" aria-label="提交搜索" data-toast="已触发搜索反馈">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m20 20-4.2-4.2"/><circle cx="10.5" cy="10.5" r="6.5"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <aside class="vc-drawer" aria-label="移动菜单" aria-hidden="true" data-drawer>
+    <h2>菜单</h2>
+    <div class="vc-drawer-list">
+      <button type="button" data-route="home">首页</button>
+      <button type="button" data-route="category">分类</button>
+      <button type="button" data-route="feed">动态</button>
+      <button type="button" data-route="settings">设置</button>
+    </div>
+  </aside>
+
+  <div class="vc-toast" role="status" aria-live="polite" aria-hidden="true" data-toast-box>
+    <span data-toast-message>已完成</span>
+    <button type="button" aria-label="关闭提示" data-toast-close>x</button>
+  </div>
+
+  <script>
+    (() => {
+      const progress = document.querySelector("[data-progress]");
+      const toast = document.querySelector("[data-toast-box]");
+      const toastMessage = document.querySelector("[data-toast-message]");
+      const searchPanel = document.querySelector("[data-search-panel]");
+      const drawer = document.querySelector("[data-drawer]");
+      const drawerToggle = document.querySelector("[data-drawer-toggle]");
+      let toastTimer = 0;
+
+      const showProgress = () => {
+        progress.classList.add("is-active");
+        window.setTimeout(() => progress.classList.remove("is-active"), 520);
+      };
+
+      const showToast = (message) => {
+        window.clearTimeout(toastTimer);
+        toastMessage.textContent = message;
+        toast.classList.add("is-open");
+        toast.setAttribute("aria-hidden", "false");
+        toastTimer = window.setTimeout(() => {
+          toast.classList.remove("is-open");
+          toast.setAttribute("aria-hidden", "true");
+        }, 2100);
+      };
+
+      const setRoute = (route) => {
+        document.querySelectorAll("[data-route]").forEach((item) => {
+          if (item.dataset.route === route) {
+            item.setAttribute("aria-current", "page");
+          } else {
+            item.removeAttribute("aria-current");
+          }
+        });
+      };
+
+      const openSearch = () => {
+        searchPanel.classList.add("is-open");
+        searchPanel.setAttribute("aria-hidden", "false");
+        const input = searchPanel.querySelector("input");
+        if (input) input.focus();
+      };
+
+      const closeSearch = () => {
+        searchPanel.classList.remove("is-open");
+        searchPanel.setAttribute("aria-hidden", "true");
+      };
+
+      const toggleDrawer = () => {
+        const nextOpen = !drawer.classList.contains("is-open");
+        drawer.classList.toggle("is-open", nextOpen);
+        drawer.setAttribute("aria-hidden", String(!nextOpen));
+        drawerToggle.setAttribute("aria-expanded", String(nextOpen));
+      };
+
+      const closeDrawer = () => {
+        drawer.classList.remove("is-open");
+        drawer.setAttribute("aria-hidden", "true");
+        drawerToggle.setAttribute("aria-expanded", "false");
+      };
+
+      const addRipple = (host, event) => {
+        const rect = host.getBoundingClientRect();
+        const ripple = document.createElement("span");
+        ripple.className = "vc-ripple";
+        ripple.style.left = `${event.clientX - rect.left}px`;
+        ripple.style.top = `${event.clientY - rect.top}px`;
+        host.appendChild(ripple);
+        window.setTimeout(() => ripple.remove(), 650);
+      };
+
+      document.querySelectorAll("[data-tab]").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll("[data-tab]").forEach((item) => item.setAttribute("aria-selected", "false"));
+          tab.setAttribute("aria-selected", "true");
+          showToast(`已切换到 ${tab.textContent.trim()}`);
+        });
+      });
+
+      document.querySelectorAll("[data-route]").forEach((item) => {
+        item.addEventListener("click", () => {
+          const route = item.dataset.route;
+          setRoute(route);
+          showProgress();
+          closeDrawer();
+          if (route === "search") {
+            openSearch();
+          } else {
+            closeSearch();
+            showToast(`已切换到 ${item.textContent.trim() || item.getAttribute("aria-label")}`);
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-card]").forEach((card) => {
+        const activate = (event) => {
+          const ignored = event.target.closest("[data-author]");
+          if (ignored) return;
+          card.classList.add("is-active");
+          addRipple(card, event);
+          showProgress();
+          showToast(`打开视频预览：${card.dataset.title}`);
+          window.setTimeout(() => card.classList.remove("is-active"), 500);
+        };
+        card.addEventListener("click", activate);
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            activate({ target: card, clientX: card.getBoundingClientRect().left + 12, clientY: card.getBoundingClientRect().top + 12 });
+          }
+        });
+      });
+
+      document.querySelectorAll("[data-author]").forEach((author) => {
+        author.addEventListener("click", (event) => {
+          event.stopPropagation();
+          showToast(`打开作者：${author.dataset.author}`);
+        });
+      });
+
+      document.querySelectorAll("[data-toast]").forEach((button) => {
+        button.addEventListener("click", () => showToast(button.dataset.toast));
+      });
+
+      document.querySelectorAll("[data-state]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const state = button.dataset.state;
+          document.querySelectorAll("[data-state-card]").forEach((card) => {
+            card.classList.toggle("is-visible", card.dataset.stateCard === state);
+          });
+          showToast(`状态：${state}`);
+        });
+      });
+
+      document.querySelectorAll(".vc-filter-pill").forEach((pill) => {
+        pill.addEventListener("click", () => {
+          document.querySelectorAll(".vc-filter-pill").forEach((item) => item.setAttribute("aria-pressed", "false"));
+          pill.setAttribute("aria-pressed", "true");
+        });
+      });
+
+      drawerToggle.addEventListener("click", toggleDrawer);
+      document.querySelector("[data-toast-close]").addEventListener("click", () => {
+        toast.classList.remove("is-open");
+        toast.setAttribute("aria-hidden", "true");
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeSearch();
+          closeDrawer();
+          toast.classList.remove("is-open");
+          toast.setAttribute("aria-hidden", "true");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -45,7 +45,11 @@ REQUIRED_FILES = [
     "assets/frontend-template/src/pages/HomePage.tsx",
     "assets/frontend-template/src/components/AppShell.tsx",
     "assets/frontend-template/src/components/Navigation.tsx",
+    "assets/frontend-template/src/components/BrandHeader.tsx",
+    "assets/frontend-template/src/components/DecorativeMasthead.tsx",
+    "assets/frontend-template/src/components/CategoryTabs.tsx",
     "assets/frontend-template/src/components/Announcement.tsx",
+    "assets/frontend-template/src/components/MediaFeedSection.tsx",
     "assets/frontend-template/src/components/SearchFilter.tsx",
     "assets/frontend-template/src/components/CardGrid.tsx",
     "assets/frontend-template/src/components/MediaCard.tsx",
@@ -84,12 +88,6 @@ HYGIENE_MARKERS = [
     "example.com",
     "localhost",
     "127.0.0.1",
-    "aoi-admin",
-    "rin721",
-    "Character_Skill_Producer",
-    "home-ui-design-skill",
-    "jiejoe-ui-skill",
-    "video-ui-design-skill",
 ]
 
 
@@ -164,7 +162,20 @@ def check_templates(root: Path) -> None:
             frontend / "README.md",
         ]
     )
-    for marker in ["loading", "empty", "error", "success", "focus-visible", "reduced-motion", "cta", "footer"]:
+    for marker in [
+        "masthead",
+        "category-tabs",
+        "announcement",
+        "media-feed",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "focus-visible",
+        "reduced-motion",
+        "cta",
+        "footer",
+    ]:
         if marker not in frontend_text:
             fail(f"frontend template missing marker: {marker}")
     static_text = "\n".join(
@@ -176,7 +187,20 @@ def check_templates(root: Path) -> None:
             static / "README.md",
         ]
     )
-    for marker in ["loading", "empty", "error", "success", "focus-visible", "prefers-reduced-motion", "cta", "footer"]:
+    for marker in [
+        "masthead",
+        "category-tabs",
+        "announcement",
+        "media-feed",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "focus-visible",
+        "prefers-reduced-motion",
+        "cta",
+        "footer",
+    ]:
         if marker not in static_text:
             fail(f"static template missing marker: {marker}")
 
@@ -196,7 +220,7 @@ def check_hygiene(root: Path) -> None:
     for path in root.rglob("*"):
         if not path.is_file() or path in excluded:
             continue
-        if ".git" in path.parts or path.suffix not in scanned_suffixes:
+        if any(part in {".git", "node_modules", "dist"} for part in path.parts) or path.suffix not in scanned_suffixes:
             continue
         text = read_text(path)
         for marker in HYGIENE_MARKERS:

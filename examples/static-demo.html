@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KIRAKIRA-Inspired Static Demo</title>
+    <style>
+      :root {
+        --color-brand-primary: rgb(240, 110, 142);
+        --color-brand-soft: rgba(240, 110, 142, 0.08);
+        --color-brand-wash: rgba(240, 110, 142, 0.16);
+        --color-brand-ribbon: rgba(240, 110, 142, 0.3);
+        --color-text-primary: rgb(33, 33, 33);
+        --color-text-secondary: oklab(0.523704 0.0113027 0.00135533);
+        --color-surface: #ffffff;
+        --color-surface-glass: rgba(255, 255, 255, 0.88);
+        --color-border-subtle: rgba(240, 110, 142, 0.12);
+        --color-shadow: rgba(35, 25, 30, 0.09);
+        --color-focus-ring: #2563eb;
+        --font-sans:
+          "Yozora Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Noto Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
+        --layout-rail-width: 56px;
+        --layout-banner-height: 140px;
+        --layout-mobile-topbar: 56px;
+        --layout-mobile-bottom: 92px;
+        --container-max: 1180px;
+        --grid-card-width: 220px;
+        --grid-card-gap: 0px;
+        --radius-button: 999px;
+        --radius-card: 6px;
+        --radius-panel: 6px;
+        --motion-fast: 140ms;
+        --motion-normal: 220ms;
+        --motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+        font-family: var(--font-sans);
+        color: var(--color-text-primary);
+        background: var(--color-surface);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-height: 100%;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        background: var(--color-surface);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      :focus-visible {
+        outline: 3px solid var(--color-focus-ring);
+        outline-offset: 3px;
+      }
+
+      .skip-link {
+        position: fixed;
+        top: 12px;
+        left: 68px;
+        z-index: 40;
+        transform: translateY(-160%);
+        border-radius: 4px;
+        background: var(--color-text-primary);
+        color: #fff;
+        padding: 8px 12px;
+        transition: transform var(--motion-fast) var(--motion-ease);
+      }
+
+      .skip-link:focus-visible {
+        transform: translateY(0);
+      }
+
+      .app-shell {
+        min-height: 100vh;
+        padding-left: var(--layout-rail-width);
+      }
+
+      .rail {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 30;
+        width: var(--layout-rail-width);
+        background:
+          linear-gradient(90deg, rgba(240, 110, 142, 0.08), transparent 78%),
+          #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .rail-group {
+        display: grid;
+        gap: 8px;
+        padding-top: 8px;
+      }
+
+      .rail-group.bottom {
+        margin-top: auto;
+        padding-bottom: 8px;
+      }
+
+      .icon-link,
+      .icon-button {
+        width: 40px;
+        height: 40px;
+        border: 0;
+        border-radius: var(--radius-button);
+        display: inline-grid;
+        place-items: center;
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        transition:
+          background-color var(--motion-fast) var(--motion-ease),
+          color var(--motion-fast) var(--motion-ease),
+          transform var(--motion-fast) var(--motion-ease);
+      }
+
+      .icon-link svg,
+      .icon-button svg {
+        width: 23px;
+        height: 23px;
+        stroke: currentColor;
+        stroke-width: 2;
+        fill: none;
+      }
+
+      .icon-link:hover,
+      .icon-link[aria-current="page"],
+      .icon-button:hover {
+        background: var(--color-brand-soft);
+        color: var(--color-brand-primary);
+      }
+
+      .icon-link:active,
+      .icon-button:active,
+      .tab:active,
+      .demo-button:active {
+        transform: scale(0.96);
+      }
+
+      .rail-brand {
+        position: relative;
+        width: 56px;
+        height: 208px;
+        margin-top: auto;
+        margin-bottom: auto;
+        display: grid;
+        place-items: center;
+        color: var(--color-brand-primary);
+      }
+
+      .rail-brand::before,
+      .rail-brand::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 56px;
+        height: 40px;
+        background: var(--color-brand-primary);
+        transform: skewY(-24deg);
+      }
+
+      .rail-brand::before {
+        bottom: 14px;
+      }
+
+      .rail-brand::after {
+        bottom: -6px;
+        opacity: 0.92;
+      }
+
+      .vertical-wordmark {
+        position: relative;
+        z-index: 1;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        color: var(--color-brand-primary);
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 2px;
+      }
+
+      .vertical-star {
+        position: absolute;
+        top: 16px;
+        left: 14px;
+        width: 30px;
+        height: 30px;
+        color: var(--color-brand-primary);
+      }
+
+      .mobile-topbar,
+      .mobile-bottom-nav {
+        display: none;
+      }
+
+      .content {
+        min-height: 100vh;
+      }
+
+      .hero-banner {
+        position: relative;
+        height: var(--layout-banner-height);
+        overflow: hidden;
+        border-bottom: 1px solid rgba(240, 110, 142, 0.08);
+        background: #fff;
+      }
+
+      .hero-banner::before {
+        content: "";
+        position: absolute;
+        top: -102px;
+        left: calc(50% + 96px);
+        width: 120px;
+        height: 390px;
+        background: var(--color-brand-ribbon);
+        transform: rotate(55deg);
+      }
+
+      .hero-banner::after {
+        content: "";
+        position: absolute;
+        right: -46px;
+        top: -52px;
+        width: 112px;
+        height: 112px;
+        border: 2px solid var(--color-brand-primary);
+        border-radius: 50%;
+        opacity: 0.7;
+      }
+
+      .line-doodles {
+        position: absolute;
+        left: 34%;
+        top: 82px;
+        width: 78px;
+        height: 50px;
+        color: var(--color-brand-primary);
+        opacity: 0.82;
+      }
+
+      .plus-grid {
+        position: absolute;
+        right: 10px;
+        top: 52px;
+        display: grid;
+        grid-template-columns: repeat(4, 28px);
+        gap: 10px 14px;
+        color: var(--color-brand-primary);
+        font-size: 27px;
+        font-weight: 300;
+        line-height: 1;
+      }
+
+      .mini-triangle {
+        position: absolute;
+        right: 48px;
+        top: 82px;
+        width: 0;
+        height: 0;
+        border-top: 14px solid transparent;
+        border-bottom: 14px solid transparent;
+        border-left: 28px solid var(--color-brand-primary);
+        opacity: 0.86;
+      }
+
+      .brand-center {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        padding-top: 4px;
+        color: var(--color-brand-primary);
+      }
+
+      .brand-lockup {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transform: translateY(-4px);
+      }
+
+      .brand-text {
+        font-size: 48px;
+        line-height: 1;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .brand-star {
+        position: relative;
+        width: 42px;
+        height: 42px;
+        background: currentColor;
+        clip-path: polygon(50% 0, 61% 34%, 98% 34%, 68% 55%, 79% 91%, 50% 68%, 21% 91%, 32% 55%, 2% 34%, 39% 34%);
+      }
+
+      .brand-star::before,
+      .brand-star::after {
+        content: "";
+        position: absolute;
+        height: 4px;
+        width: 34px;
+        border-radius: 99px;
+        background: currentColor;
+        right: -38px;
+        top: 5px;
+        transform: rotate(-28deg);
+      }
+
+      .brand-star::after {
+        width: 22px;
+        top: 22px;
+        right: -28px;
+      }
+
+      .page-inner {
+        width: min(var(--container-max), calc(100% - 88px));
+        margin: 0 auto;
+      }
+
+      .category-row {
+        height: 64px;
+        display: flex;
+        align-items: center;
+        gap: 33px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        white-space: nowrap;
+      }
+
+      .category-row::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab {
+        position: relative;
+        border: 0;
+        background: transparent;
+        color: var(--color-text-primary);
+        cursor: pointer;
+        padding: 0 0 11px;
+        font-size: 16px;
+        font-weight: 400;
+        transition:
+          color var(--motion-fast) var(--motion-ease),
+          transform var(--motion-fast) var(--motion-ease);
+      }
+
+      .tab:hover,
+      .tab[aria-selected="true"] {
+        color: var(--color-brand-primary);
+      }
+
+      .tab[aria-selected="true"]::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 3px;
+        border-radius: 999px;
+        background: var(--color-brand-primary);
+      }
+
+      .notice-card {
+        display: grid;
+        grid-template-columns: 24px minmax(0, 1fr);
+        gap: 8px;
+        align-items: start;
+        min-height: 80px;
+        border-radius: var(--radius-panel);
+        background: #fff;
+        box-shadow: 0 2px 12px var(--color-shadow);
+        padding: 18px 20px;
+      }
+
+      .notice-icon {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: inline-grid;
+        place-items: center;
+        background: var(--color-text-primary);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .notice-title {
+        margin: 0 0 6px;
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      .notice-card p {
+        margin: 0;
+        color: var(--color-text-primary);
+        line-height: 1.7;
+      }
+
+      .notice-card a {
+        color: var(--color-brand-primary);
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+      }
+
+      .feed-section {
+        margin-top: 16px;
+        padding-bottom: 56px;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 28px;
+        margin: 0 0 16px;
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      .section-heading svg {
+        width: 18px;
+        height: 18px;
+        fill: var(--color-brand-primary);
+        color: var(--color-brand-primary);
+      }
+
+      .section-heading .title {
+        color: var(--color-brand-primary);
+      }
+
+      .count-badge {
+        border-radius: 4px;
+        background: var(--color-brand-primary);
+        color: #fff;
+        min-width: 24px;
+        height: 20px;
+        display: inline-grid;
+        place-items: center;
+        padding: 0 8px;
+        font-size: 13px;
+        line-height: 20px;
+      }
+
+      .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(var(--grid-card-width), 1fr));
+        gap: 8px var(--grid-card-gap);
+      }
+
+      .video-card {
+        display: block;
+        min-width: 0;
+        border-radius: var(--radius-card);
+        padding: 8px;
+        color: var(--color-text-primary);
+        transition:
+          background-color var(--motion-fast) var(--motion-ease),
+          transform var(--motion-fast) var(--motion-ease);
+      }
+
+      .video-card:hover,
+      .video-card:focus-visible {
+        background: var(--color-brand-soft);
+        transform: translateY(-2px);
+      }
+
+      .thumb {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 4px;
+        background:
+          linear-gradient(135deg, var(--thumb-a), var(--thumb-b)),
+          radial-gradient(circle at 24% 38%, rgba(255, 255, 255, 0.55), transparent 22%),
+          radial-gradient(circle at 72% 30%, rgba(255, 255, 255, 0.35), transparent 24%);
+      }
+
+      .thumb::before {
+        content: "";
+        position: absolute;
+        inset: -12px;
+        background:
+          repeating-linear-gradient(100deg, rgba(255, 255, 255, 0.18) 0 18px, transparent 18px 40px),
+          radial-gradient(circle at var(--spark-x) var(--spark-y), rgba(255, 255, 255, 0.75), transparent 18%);
+        filter: blur(7px);
+        transform: scale(1.04);
+      }
+
+      .thumb::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 54%, rgba(0, 0, 0, 0.18));
+      }
+
+      .thumb-label {
+        position: absolute;
+        z-index: 1;
+        right: 8px;
+        bottom: 6px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.34);
+      }
+
+      .video-title {
+        display: -webkit-box;
+        min-height: 44px;
+        margin: 8px 0 4px;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        color: var(--color-text-primary);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.55;
+      }
+
+      .video-card:hover .video-title {
+        color: var(--color-brand-primary);
+      }
+
+      .author,
+      .meta-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--color-text-secondary);
+        font-size: 12px;
+        min-height: 17px;
+      }
+
+      .author {
+        margin-bottom: 3px;
+      }
+
+      .author svg,
+      .meta-row svg {
+        width: 13px;
+        height: 13px;
+        flex: 0 0 auto;
+        fill: currentColor;
+        stroke: currentColor;
+      }
+
+      .meta-row {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .meta-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .state-lab {
+        margin: 8px auto 56px;
+        border-top: 1px solid var(--color-border-subtle);
+        padding-top: 18px;
+      }
+
+      .state-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .demo-button {
+        min-height: 34px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        padding: 0 10px;
+        font-weight: 700;
+      }
+
+      .demo-button:hover,
+      .demo-button[data-active="true"] {
+        background: var(--color-brand-soft);
+        color: var(--color-brand-primary);
+      }
+
+      .state-panel {
+        display: none;
+        min-height: 120px;
+        border-radius: var(--radius-panel);
+        background: var(--color-brand-soft);
+        color: var(--color-text-secondary);
+        padding: 18px;
+      }
+
+      .state-panel[data-visible="true"] {
+        display: grid;
+        place-items: center;
+        text-align: center;
+      }
+
+      .skeleton-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+      }
+
+      .skeleton-card {
+        display: grid;
+        gap: 8px;
+      }
+
+      .skeleton-thumb,
+      .skeleton-line {
+        border-radius: 4px;
+        background:
+          linear-gradient(90deg, rgba(240, 110, 142, 0.08), rgba(240, 110, 142, 0.18), rgba(240, 110, 142, 0.08));
+        background-size: 220% 100%;
+        animation: shimmer 1300ms linear infinite;
+      }
+
+      .skeleton-thumb {
+        aspect-ratio: 16 / 9;
+      }
+
+      .skeleton-line {
+        height: 12px;
+      }
+
+      .skeleton-line.short {
+        width: 62%;
+      }
+
+      .toast {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 50;
+        max-width: min(340px, calc(100vw - 36px));
+        transform: translateY(18px);
+        opacity: 0;
+        pointer-events: none;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow: 0 8px 26px var(--color-shadow);
+        color: var(--color-text-primary);
+        padding: 12px 14px;
+        transition:
+          opacity var(--motion-normal) var(--motion-ease),
+          transform var(--motion-normal) var(--motion-ease);
+      }
+
+      .toast[data-visible="true"] {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .toast strong {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--color-brand-primary);
+      }
+
+      @keyframes shimmer {
+        from {
+          background-position: 120% 0;
+        }
+        to {
+          background-position: -120% 0;
+        }
+      }
+
+      @media (max-width: 760px) {
+        :root {
+          --grid-card-width: 160px;
+          --grid-card-gap: 0px;
+        }
+
+        body {
+          padding-bottom: var(--layout-mobile-bottom);
+        }
+
+        .app-shell {
+          padding-left: 0;
+          padding-top: var(--layout-mobile-topbar);
+        }
+
+        .rail,
+        .hero-banner,
+        .category-row {
+          display: none;
+        }
+
+        .mobile-topbar {
+          position: fixed;
+          inset: 0 0 auto;
+          z-index: 30;
+          height: var(--layout-mobile-topbar);
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          border-bottom: 1px solid rgba(240, 110, 142, 0.08);
+          background: rgba(255, 255, 255, 0.94);
+          box-shadow: 0 8px 22px rgba(240, 110, 142, 0.08);
+          backdrop-filter: blur(14px);
+          padding: 0 10px;
+        }
+
+        .mobile-menu {
+          width: 20px;
+          height: 20px;
+          border: 0;
+          background: transparent;
+          color: var(--color-text-primary);
+          padding: 0;
+          font-size: 22px;
+          line-height: 1;
+        }
+
+        .mobile-wordmark {
+          display: inline-flex;
+          align-items: center;
+          color: var(--color-brand-primary);
+          font-size: 20px;
+          font-weight: 800;
+          letter-spacing: 0;
+        }
+
+        .page-inner {
+          width: 100%;
+          padding: 0 16px;
+        }
+
+        .notice-card {
+          grid-template-columns: 24px minmax(0, 1fr);
+          gap: 8px;
+          width: calc(100% - 32px);
+          margin-right: auto;
+          margin-left: auto;
+          margin-top: 16px;
+          min-height: 138px;
+          padding: 18px;
+        }
+
+        .notice-card p {
+          line-height: 1.65;
+        }
+
+        .feed-section {
+          margin-top: 14px;
+          padding-bottom: 24px;
+        }
+
+        .section-heading {
+          margin-left: 0;
+          margin-bottom: 10px;
+        }
+
+        .video-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0;
+          margin: 0 -8px;
+        }
+
+        .video-card {
+          min-height: 235px;
+          padding: 8px 9px;
+        }
+
+        .thumb {
+          width: calc(100% + 7px);
+          border-radius: 4px;
+        }
+
+        .video-title {
+          min-height: 44px;
+          margin-top: 7px;
+        }
+
+        .mobile-bottom-nav {
+          position: fixed;
+          inset: auto 0 0;
+          z-index: 30;
+          height: var(--layout-mobile-bottom);
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.96)),
+            radial-gradient(circle at 20% 0, rgba(240, 110, 142, 0.16), transparent 38%);
+          box-shadow: 0 -12px 32px rgba(33, 33, 33, 0.08);
+          backdrop-filter: blur(16px);
+          padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .bottom-link {
+          display: grid;
+          place-items: center;
+          align-content: center;
+          gap: 3px;
+          color: var(--color-text-secondary);
+          font-size: 12px;
+        }
+
+        .bottom-link svg {
+          width: 23px;
+          height: 23px;
+          fill: currentColor;
+          stroke: currentColor;
+        }
+
+        .bottom-link[aria-current="page"] {
+          color: var(--color-brand-primary);
+          font-weight: 700;
+        }
+
+        .state-lab {
+          margin-bottom: 28px;
+        }
+
+        .toast {
+          bottom: calc(var(--layout-mobile-bottom) + 12px);
+        }
+      }
+
+      @media (min-width: 761px) {
+        .notice-card {
+          margin-top: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 1ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 1ms !important;
+        }
+
+        .video-card:hover,
+        .video-card:focus-visible,
+        .icon-link:active,
+        .icon-button:active,
+        .tab:active,
+        .demo-button:active {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#latest">跳到最新内容</a>
+
+    <div class="app-shell">
+      <nav class="rail" aria-label="桌面导航">
+        <div class="rail-group" aria-label="主要入口">
+          <a class="icon-link" href="#" aria-label="首页" aria-current="page">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5v7a1 1 0 0 1-1 1h-4.5v-5h-5v5H5a1 1 0 0 1-1-1z" /></svg>
+          </a>
+          <a class="icon-link" href="#latest" aria-label="搜索">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.5" /><path d="m15 15 4 4" /></svg>
+          </a>
+          <a class="icon-link" href="#latest" aria-label="历史">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7" /><path d="M4 5v5h5" /><path d="M12 8v5l3 2" /></svg>
+          </a>
+          <a class="icon-link" href="#latest" aria-label="收藏">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.5 6 .9-4.3 4.2 1 5.9-5.4-2.8-5.4 2.8 1-5.9-4.3-4.2 6-.9z" /></svg>
+          </a>
+          <a class="icon-link" href="#latest" aria-label="关注">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /><path d="M12 3v2M12 19v2M3 12h2M19 12h2" /></svg>
+          </a>
+          <a class="icon-link" href="#latest" aria-label="投稿">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12" /><path d="m7 9 5-5 5 5" /><path d="M5 19h14" /></svg>
+          </a>
+        </div>
+
+        <a class="rail-brand" href="#" aria-label="KIRAKIRA 首页">
+          <svg class="vertical-star" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m12 2 2.4 6.5 6.9.3-5.4 4.3 1.8 6.7-5.7-3.8-5.7 3.8 1.8-6.7-5.4-4.3 6.9-.3z" /></svg>
+          <span class="vertical-wordmark">KIRAKIRA</span>
+        </a>
+
+        <div class="rail-group bottom">
+          <a class="icon-link" href="#latest" aria-label="用户">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5" /><path d="M5 20c1.2-4 12.8-4 14 0" /></svg>
+          </a>
+          <button class="icon-button" type="button" aria-label="设置">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Z" /><path d="m4 12 .9-1.8-.7-2 2-.7 1-1.8 2 .8L12 5l1.8 1.5 2-.8 1 1.8 2 .7-.7 2L20 12l-.9 1.8.7 2-2 .7-1 1.8-2-.8L12 19l-1.8-1.5-2 .8-1-1.8-2-.7.7-2z" /></svg>
+          </button>
+        </div>
+      </nav>
+
+      <header class="mobile-topbar" aria-label="移动端顶部栏">
+        <button class="mobile-menu" type="button" aria-label="打开菜单">=</button>
+        <a class="mobile-wordmark" href="#" aria-label="KIRAKIRA 首页">KiRAKiRA</a>
+      </header>
+
+      <main class="content">
+        <section class="hero-banner" aria-label="KIRAKIRA 风格装饰横幅">
+          <svg class="line-doodles" viewBox="0 0 80 54" aria-hidden="true">
+            <path d="M2 52V10l34 25" stroke="currentColor" stroke-width="2" fill="none" />
+            <path d="M64 1 36 18" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+            <path d="M72 18 55 27" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+          </svg>
+          <div class="plus-grid" aria-hidden="true">
+            <span>+</span><span>+</span><span>+</span><span>+</span>
+            <span>+</span><span>+</span><span>+</span><span>+</span>
+            <span>+</span><span>+</span><span>+</span><span>+</span>
+            <span>+</span><span>+</span><span>+</span><span>+</span>
+          </div>
+          <span class="mini-triangle" aria-hidden="true"></span>
+          <div class="brand-center">
+            <div class="brand-lockup" aria-label="KiRAKiRA">
+              <span class="brand-text">KiRAKiRA</span>
+              <span class="brand-star" aria-hidden="true"></span>
+            </div>
+          </div>
+        </section>
+
+        <nav class="page-inner category-row" aria-label="分类">
+          <button class="tab" type="button" aria-selected="true">首页</button>
+          <button class="tab" type="button" aria-selected="false">动画</button>
+          <button class="tab" type="button" aria-selected="false">音乐</button>
+          <button class="tab" type="button" aria-selected="false">音MAD</button>
+          <button class="tab" type="button" aria-selected="false">科技</button>
+          <button class="tab" type="button" aria-selected="false">设计</button>
+          <button class="tab" type="button" aria-selected="false">游戏</button>
+          <button class="tab" type="button" aria-selected="false">综合</button>
+        </nav>
+
+        <section class="page-inner notice-card" aria-labelledby="notice-title">
+          <span class="notice-icon" aria-hidden="true">i</span>
+          <div>
+            <h1 id="notice-title" class="notice-title">公告</h1>
+            <p>
+              小站仍在慢慢打磨中。加入我们的
+              <a href="#community">Discord 服务器</a>
+              一起围观开发进展、和开发者交流吧；如果你会写代码，也欢迎一起参与建设。
+            </p>
+          </div>
+        </section>
+
+        <section id="latest" class="page-inner feed-section" aria-labelledby="latest-title">
+          <h2 id="latest-title" class="section-heading">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7 8h3v6h4V8h3z" /><path d="M6 18h12v3H6z" /></svg>
+            <span class="title">最新</span>
+            <span class="count-badge">0</span>
+          </h2>
+
+          <div class="video-grid" data-view="normal">
+            <a class="video-card" href="#" style="--thumb-a:#d4c175;--thumb-b:#3f5e7c;--spark-x:36%;--spark-y:52%">
+              <div class="thumb" aria-hidden="true"><span class="thumb-label">LIVE</span></div>
+              <strong class="video-title">【同人现场】星光舞台剪辑片段合集</strong>
+              <span class="author"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4" r="3" /><path d="M2 14c1-4 11-4 12 0" /></svg>浅色放映室</span>
+              <span class="meta-row"><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" /></svg>0</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke-width="1.8" /><path d="M8 4v4l3 2" fill="none" stroke-width="1.8" /></svg>05:00</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h10v12H3z" fill="none" stroke-width="1.6" /><path d="M3 6h10" fill="none" stroke-width="1.6" /></svg>2026/06/23</span></span>
+            </a>
+            <a class="video-card" href="#" style="--thumb-a:#2c3140;--thumb-b:#d7bb71;--spark-x:62%;--spark-y:38%">
+              <div class="thumb" aria-hidden="true"><span class="thumb-label">CLIP</span></div>
+              <strong class="video-title">【社群剪辑】创作者大会高光回放</strong>
+              <span class="author"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4" r="3" /><path d="M2 14c1-4 11-4 12 0" /></svg>浅色放映室</span>
+              <span class="meta-row"><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" /></svg>0</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke-width="1.8" /><path d="M8 4v4l3 2" fill="none" stroke-width="1.8" /></svg>05:00</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h10v12H3z" fill="none" stroke-width="1.6" /><path d="M3 6h10" fill="none" stroke-width="1.6" /></svg>2026/06/23</span></span>
+            </a>
+            <a class="video-card" href="#" style="--thumb-a:#9f1515;--thumb-b:#f1cc84;--spark-x:45%;--spark-y:44%">
+              <div class="thumb" aria-hidden="true"><span class="thumb-label">GAME</span></div>
+              <strong class="video-title">【游戏性能】移动端画质模式横向比较</strong>
+              <span class="author"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4" r="3" /><path d="M2 14c1-4 11-4 12 0" /></svg>艾文个体</span>
+              <span class="meta-row"><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" /></svg>0</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke-width="1.8" /><path d="M8 4v4l3 2" fill="none" stroke-width="1.8" /></svg>05:00</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h10v12H3z" fill="none" stroke-width="1.6" /><path d="M3 6h10" fill="none" stroke-width="1.6" /></svg>2026/02/22</span></span>
+            </a>
+            <a class="video-card" href="#" style="--thumb-a:#e8d999;--thumb-b:#9dcf88;--spark-x:60%;--spark-y:32%">
+              <div class="thumb" aria-hidden="true"><span class="thumb-label">MV</span></div>
+              <strong class="video-title">Colorful Array - Community Cover Video</strong>
+              <span class="author"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4" r="3" /><path d="M2 14c1-4 11-4 12 0" /></svg>菜鸟剪辑</span>
+              <span class="meta-row"><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" /></svg>0</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke-width="1.8" /><path d="M8 4v4l3 2" fill="none" stroke-width="1.8" /></svg>05:00</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h10v12H3z" fill="none" stroke-width="1.6" /><path d="M3 6h10" fill="none" stroke-width="1.6" /></svg>2025/12/22</span></span>
+            </a>
+            <a class="video-card" href="#" style="--thumb-a:#7a2c92;--thumb-b:#e56bb4;--spark-x:43%;--spark-y:47%">
+              <div class="thumb" aria-hidden="true"><span class="thumb-label">MUSIC</span></div>
+              <strong class="video-title">【怀旧音乐】黄昏电台精选片段</strong>
+              <span class="author"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4" r="3" /><path d="M2 14c1-4 11-4 12 0" /></svg>昔日频道</span>
+              <span class="meta-row"><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" /></svg>0</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke-width="1.8" /><path d="M8 4v4l3 2" fill="none" stroke-width="1.8" /></svg>05:00</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h10v12H3z" fill="none" stroke-width="1.6" /><path d="M3 6h10" fill="none" stroke-width="1.6" /></svg>2025/12/16</span></span>
+            </a>
+            <a class="video-card" href="#" style="--thumb-a:#b88f5f;--thumb-b:#cde7e0;--spark-x:35%;--spark-y:35%">
+              <div class="thumb" aria-hidden="true"><span class="thumb-label">ANIME</span></div>
+              <strong class="video-title">Ai Higuchi - When We Were the Most Beautiful</strong>
+              <span class="author"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4" r="3" /><path d="M2 14c1-4 11-4 12 0" /></svg>艾文个体</span>
+              <span class="meta-row"><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" /></svg>0</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke-width="1.8" /><path d="M8 4v4l3 2" fill="none" stroke-width="1.8" /></svg>05:00</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h10v12H3z" fill="none" stroke-width="1.6" /><path d="M3 6h10" fill="none" stroke-width="1.6" /></svg>2025/12/16</span></span>
+            </a>
+            <a class="video-card" href="#" style="--thumb-a:#285c95;--thumb-b:#e7d2b2;--spark-x:54%;--spark-y:46%">
+              <div class="thumb" aria-hidden="true"><span class="thumb-label">TECH</span></div>
+              <strong class="video-title">【影像观察】清晰度变化是不是错觉</strong>
+              <span class="author"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4" r="3" /><path d="M2 14c1-4 11-4 12 0" /></svg>艾文个体</span>
+              <span class="meta-row"><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" /></svg>0</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke-width="1.8" /><path d="M8 4v4l3 2" fill="none" stroke-width="1.8" /></svg>05:00</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h10v12H3z" fill="none" stroke-width="1.6" /><path d="M3 6h10" fill="none" stroke-width="1.6" /></svg>2024/10/09</span></span>
+            </a>
+            <a class="video-card" href="#" style="--thumb-a:#f4a0b8;--thumb-b:#f8d8dc;--spark-x:50%;--spark-y:50%">
+              <div class="thumb" aria-hidden="true"><span class="thumb-label">INFO</span></div>
+              <strong class="video-title">KiRAKiRA 下一代同人视频网站概念展示</strong>
+              <span class="author"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4" r="3" /><path d="M2 14c1-4 11-4 12 0" /></svg>KIRAKIRA DEMO</span>
+              <span class="meta-row"><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" /></svg>0</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke-width="1.8" /><path d="M8 4v4l3 2" fill="none" stroke-width="1.8" /></svg>05:00</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h10v12H3z" fill="none" stroke-width="1.6" /><path d="M3 6h10" fill="none" stroke-width="1.6" /></svg>2024/08/07</span></span>
+            </a>
+            <a class="video-card" href="#" style="--thumb-a:#7e8e84;--thumb-b:#d6c2ab;--spark-x:41%;--spark-y:40%">
+              <div class="thumb" aria-hidden="true"><span class="thumb-label">MAD</span></div>
+              <strong class="video-title">柴色小镇的一分钟循环练习</strong>
+              <span class="author"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4" r="3" /><path d="M2 14c1-4 11-4 12 0" /></svg>艾文个体</span>
+              <span class="meta-row"><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3v10l8-5z" /></svg>0</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke-width="1.8" /><path d="M8 4v4l3 2" fill="none" stroke-width="1.8" /></svg>05:00</span><span class="meta-chip"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h10v12H3z" fill="none" stroke-width="1.6" /><path d="M3 6h10" fill="none" stroke-width="1.6" /></svg>2024/08/02</span></span>
+            </a>
+          </div>
+        </section>
+
+        <section class="page-inner state-lab" aria-labelledby="state-title">
+          <h2 id="state-title" class="section-heading">
+            <span class="title">状态预览</span>
+            <span class="count-badge">UI</span>
+          </h2>
+          <div class="state-controls" aria-label="切换状态">
+            <button class="demo-button" type="button" data-state-target="normal" data-active="true">Normal</button>
+            <button class="demo-button" type="button" data-state-target="loading">Loading</button>
+            <button class="demo-button" type="button" data-state-target="empty">Empty</button>
+            <button class="demo-button" type="button" data-state-target="error">Error</button>
+            <button class="demo-button" type="button" data-state-target="success">Success</button>
+          </div>
+          <div class="state-panel" data-view="loading" aria-live="polite">
+            <div class="skeleton-grid" aria-label="加载中的视频卡片">
+              <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+              <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+              <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div>
+            </div>
+          </div>
+          <div class="state-panel" data-view="empty">
+            <p>这个分区暂时还没有投稿。换个分类看看吧。</p>
+          </div>
+          <div class="state-panel" data-view="error" role="alert">
+            <p>内容加载失败。请保留恢复操作，并确保错误信息可读。</p>
+          </div>
+        </section>
+      </main>
+
+      <nav class="mobile-bottom-nav" aria-label="移动端导航">
+        <a class="bottom-link" href="#" aria-current="page">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5v7a1 1 0 0 1-1 1h-4.5v-5h-5v5H5a1 1 0 0 1-1-1z" /></svg>
+          <span>首页</span>
+        </a>
+        <a class="bottom-link" href="#latest" aria-label="分类">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h6v6H5zM13 5h6v6h-6zM5 13h6v6H5zM13 13h6v6h-6z" /></svg>
+        </a>
+        <a class="bottom-link" href="#latest" aria-label="关注">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke-width="2" /><circle cx="12" cy="12" r="3" /></svg>
+        </a>
+        <a class="bottom-link" href="#latest" aria-label="搜索">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.5" fill="none" stroke-width="2" /><path d="m15 15 4 4" fill="none" stroke-width="2" /></svg>
+        </a>
+      </nav>
+    </div>
+
+    <div class="toast" role="status" aria-live="polite" data-visible="false">
+      <strong>Success</strong>
+      <span>状态反馈保持轻量，不打断浏览。</span>
+    </div>
+
+    <script>
+      const tabButtons = document.querySelectorAll(".tab");
+      const stateButtons = document.querySelectorAll("[data-state-target]");
+      const panels = document.querySelectorAll("[data-view]");
+      const videoGrid = document.querySelector(".video-grid");
+      const toast = document.querySelector(".toast");
+      let toastTimer;
+
+      tabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          tabButtons.forEach((tab) => tab.setAttribute("aria-selected", "false"));
+          button.setAttribute("aria-selected", "true");
+        });
+      });
+
+      function showState(name) {
+        videoGrid.hidden = name !== "normal" && name !== "success";
+        panels.forEach((panel) => {
+          panel.dataset.visible = String(panel.dataset.view === name);
+        });
+        document.querySelectorAll(".demo-button").forEach((button) => {
+          button.dataset.active = String(button.dataset.stateTarget === name);
+        });
+        if (name === "success") {
+          toast.dataset.visible = "true";
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => {
+            toast.dataset.visible = "false";
+          }, 2400);
+        }
+      }
+
+      stateButtons.forEach((button) => {
+        button.addEventListener("click", () => showState(button.dataset.stateTarget));
+      });
+    </script>
+  </body>
+</html>

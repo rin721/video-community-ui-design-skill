@@ -1,11 +1,7 @@
 # Forward Test: React Project
 
-## Prompt
+Use $video-community-ui-design-skill at this repository to create a React + TypeScript + Vite + Material UI frontend project for a media community homepage.
 
-Use $video-community-ui-design-skill to create a complete React, TypeScript, and Vite project for a video-community homepage. Use the frontend project rules and template asset guidance. Include AppShell, navigation, announcement, search filters, media card grid, loading/empty/error/success states, token CSS variables, fixtures, README, and build commands.
+Use neutral fixtures. Include AppShell, Navigation, DecorativeMasthead, CategoryTabs, Announcement, MediaFeedSection, MediaCard, StateBlock, Toast, CTA, Footer, CSS variables, MUI createTheme({ cssVariables: true }), ThemeProvider, responsive layout, and build instructions.
 
-## Expected Acceptance Points
-
-- Output includes a complete project tree with entry files, components, styles, fixtures, and README.
-- React components use semantic props and state branches for normal, loading, empty, error, and success feedback.
-- Styles use token variables, focus-visible, responsive breakpoints, and reduced-motion handling.
+Use real MUI primitives for Drawer/AppBar/Tabs/Alert/Card/Snackbar/BottomNavigation instead of hand-rolled DOM equivalents.

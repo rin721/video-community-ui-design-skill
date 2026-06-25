@@ -2,96 +2,147 @@
 
 ## 1. 判断页面类型
 
-- 用户要求首页时，选择 `homepage`。
-- 用户要求营销或介绍页面时，选择 `landing`。
-- 用户要求单个模块时，选择 `product-section`。
-- 用户强调手机端时，选择 `mobile-page`。
-- 用户要求组件规则时，选择 `component-spec`。
-- 用户要求变量时，选择 `design-tokens`。
+- `homepage`: 使用装饰 masthead、分类 tabs、公告信息条、媒体流、功能区、CTA 和页脚。
+- `discovery`: 强化分类、筛选、媒体网格和 loading/empty/error 分支。
+- `landing`: 使用紧凑 hero、功能区、媒体展示、CTA 和页脚。
+- `product-section`: 输出可嵌入分区，保留小型装饰标题和媒体槽。
+- `mobile-page`: 使用顶部栏、公告、分类、卡片和底部导航。
+- `component-spec`: 输出组件、token、状态和可访问性规范。
+- `frontend-project`: 读取完整项目规则和模板资产。
+- `mui-frontend-project`: 读取完整项目规则、MUI 封装映射和 React 模板资产。
 
-## 2. 判断用户是否提供输入
+## 2. 判断输入完整度
 
-- 如果提供主色，更新 `color.brand.primary` 与相关状态 token。
-- 如果提供字体，更新字体 token 并检查标题高度。
-- 如果提供文案，按 `content-rules.md` 组织层级。
-- 如果提供技术栈，使用对应 output mode。
-- 如果提供组件需求，读取对应 component recipe。
+- 有品牌色时派生完整主色体系。
+- 无品牌色时使用默认樱粉体系。
+- 有真实文案时检查是否可公开复用；不可复用时改为占位。
+- 无内容模型时使用媒体卡片默认字段。
+- 有技术栈时选择对应 output mode。
+- 无技术栈时输出 UI design spec。
 
 ## 3. 读取 Design Tokens
 
-- 先读取颜色、字体、间距、圆角、阴影和动效。
-- 再读取断点、容器、栅格和尺寸。
-- 建立 CSS variables 或设计规范映射。
+先读取 `design-tokens.json`，建立：
 
-## 4. 读取 Layout Patterns
+- `color.*`
+- `typography.*`
+- `spacing.*`
+- `radius.*`
+- `shadow.*`
+- `motion.*`
+- `breakpoint.*`
+- `layout.*`
+- `decoration.*`
 
-- 为页面选择 app shell。
-- 选择 hero、section、grid、CTA 和 footer 组合。
-- 判断是否需要公告条、筛选、内容网格和状态面板。
+## 4. 读取 Layout Grammar
+
+读取 `layout-patterns.md`，选择：
+
+- app shell
+- navigation frame
+- decorative masthead
+- category section
+- announcement section
+- media feed section
+- state page
+- CTA / footer
 
 ## 5. 读取 Component Recipes
 
-- 为每个页面模块选择组件。
-- 补齐用途、结构、token、状态、响应式和可访问性。
-- 避免生成未被规则覆盖的孤立组件。
+按页面需求读取：
+
+- 核心：AppShell、BrandHeader、DecorativeMasthead、SidebarRail、TopBar、BottomNav、CategoryTabs、AnnouncementBar、MediaFeedSection、MediaCard。
+- 状态：Skeleton、GeometricEmptyState、GeometricErrorState、Toast。
+- 业务扩展：FeatureList、CTA、Stats、PricingBlock、Form、Modal。
 
 ## 6. 读取 Interaction Rules
 
-- 补齐 hover、active、focus、disabled、loading、error、success、empty。
-- 设置 transition、easing 和 reduced motion。
-- 为键盘和触控交互提供规则。
+为所有可交互组件补齐：
+
+- hover
+- active
+- focus-visible
+- disabled
+- loading
+- error
+- empty
+- success
+- drawer / offcanvas
+- toast
+- reduced motion
 
 ## 7. 读取 Responsive Rules
 
-- 输出 desktop、tablet、mobile 三组规则。
-- 检查固定导航占位。
-- 检查卡片列数、字号、间距和图片比例。
-- 检查移动端是否横向溢出。
+分别输出：
+
+- desktop layout
+- tablet layout
+- mobile layout
+- 容器 padding
+- 网格列数
+- 导航切换
+- 字号变化
+- 长文本处理
+- 触控目标
 
 ## 8. 读取 Content Rules
 
-- 调整标题层级。
-- 控制段落密度。
-- 组织 CTA、空状态、表单提示和错误提示。
-- 替换不合适的占位文案。
+检查：
+
+- 标题层级
+- 副标题长度
+- 公告文案
+- 分类命名
+- 卡片元信息顺序
+- CTA 文案长度
+- 空状态和错误状态文案
+- 占位内容是否中性
 
 ## 9. 选择 Output Mode
 
-- 未指定技术栈：输出 UI design spec。
-- 指定 HTML/CSS：输出语义 HTML 和 CSS variables。
-- 指定 React：输出组件结构、props 和样式。
-- 指定 Vue：输出 SFC 结构、props、slots 和样式。
-- 指定 Tailwind：输出 token 映射和 class 结构。
-- 指定 Figma：输出可粘贴的 Figma prompt。
-- 指定 Frontend Project：输出可运行项目文件树、入口、页面、组件、样式、fixtures、README 和运行命令。
+- `spec`: 输出结构化 UI 设计规范。
+- `html-css`: 输出语义 HTML、CSS variables 和组件样式。
+- `react`: 默认输出 MUI-style React 组件、状态、props、theme token 和 `sx`；用户明确要求 plain React 时输出普通 React + CSS variables。
+- `react-mui`: 输出真实 MUI primitives、`ThemeProvider`、`createTheme({ cssVariables: true })`、slots、variants 和 state props。
+- `vue`: 输出 Vue SFC 和 scoped style。
+- `tailwind`: 输出 token 映射和 utility 组合。
+- `figma-prompt`: 输出可用于画面生成的结构提示。
+- `frontend-project`: 使用完整项目模板；React 完整项目默认走 MUI composition。
+- `mui-frontend-project`: 使用 `assets/frontend-template/`，并保留 MUI dependencies、theme layer 和 primitive mapping。
 
 ## 10. 生成结果
 
-- 先输出结构。
-- 再输出 token 和组件映射。
-- 再输出状态和响应式。
-- 最后输出可访问性与质量检查。
+生成时必须包含：
+
+- 视觉框架
+- token 调用
+- 组件结构
+- 状态矩阵
+- 响应式规则
+- 可访问性说明
+- 质量检查项
+
+完整项目还必须包含入口文件、样式入口、fixtures、状态分支和运行说明。
 
 ## 11. 运行 Validation Checklist
 
-- 检查美学风格。
-- 检查 token 使用。
-- 检查布局语法。
-- 检查组件配方。
-- 检查状态覆盖。
-- 检查响应式与可访问性。
+用 `validation-checklist.md` 检查：
 
-## 12. 运行 Release Hygiene
+- 美学风格
+- 视觉框架
+- design tokens
+- component recipes
+- interactions
+- responsive
+- content
+- accessibility
+- release cleanliness
 
-- 检查文件内容是否为第一方规则。
-- 检查是否包含专有资产、真实业务数据或不可替换文案。
-- 检查 JSON 是否有效。
-- 检查 Markdown 是否结构清晰。
+## 12. 运行清洁度检查
 
-## 13. 完整前端项目补充判断
+输出或写入前确认：
 
-- 如果用户要求完整项目，必须读取 `frontend-project-rules.md`。
-- 如果未指定技术栈，默认 React、TypeScript、Vite 和 CSS variables。
-- 如果用户要求零依赖，切换为静态 HTML/CSS/JavaScript。
-- 如果输出代码落地，必须创建所有入口、组件、样式、fixtures 和 README。
-- 如果只输出方案，必须给出完整文件树和关键文件内容。
+- 无特定品牌、域名、页面名、专有素材和真实业务数据。
+- 无工作过程、取样过程、形成过程或关系性说明。
+- 无不可授权图片、图标、文案或业务实体。
+- 文件和示例能独立使用。

@@ -1,106 +1,123 @@
-# Layout Grammar
+# Layout Patterns
 
 ## 页面总体框架
 
-页面使用浅色主背景、固定导航轨道、内容容器和可组合分区。桌面端允许左侧 56px 窄轨导航；移动端使用 56px 顶部栏与 56px 底部导航。内容区必须避开固定导航并保留安全间距。
+页面使用浅色主背景、固定导航轨道、装饰 masthead、内容容器和可组合分区。桌面端默认使用左侧 `size.nav.rail` 固定窄轨；移动端使用 `size.nav.mobileBar` 顶部栏与底部导航。内容区必须避开固定导航并保留安全间距。
 
-## 视觉框架分层
+## 框架层级
 
-- `app-shell`: 承载导航、滚动容器、背景层和全局反馈层。
-- `navigation-frame`: 桌面侧轨、移动顶部栏、移动底部栏和分类导航。
-- `content-frame`: 标题组、公告、主内容网格、功能区和 CTA。
-- `media-frame`: 封面、界面预览图、头像和比例占位。
-- `state-frame`: loading、empty、error、success、toast、tooltip、modal、drawer。
+- `app-shell`: 视口、导航层、滚动内容层、浮层和反馈层。
+- `navigation-frame`: 桌面窄轨、移动顶部栏、移动底部栏、分类 tabs。
+- `masthead-frame`: 字标式标题、斜向色带、星形、十字点阵、三角角标。
+- `content-frame`: 公告、标题组、媒体流、功能区、状态区和 CTA。
+- `feedback-frame`: toast、tooltip、drawer、loading bar 和状态页面。
 
-生成页面时应先确定框架层级，再放入组件。不得先堆叠组件再临时补导航和反馈。
+## 首屏组合
 
-## 页面视觉重心
+高识别页面首屏必须满足：
 
-- 内容发现页的重心是媒体卡片网格。
-- 产品介绍页的重心是标题、媒体槽和功能列表。
-- 移动端页面的重心是首个可操作内容区。
-- 状态页的重心是状态数字或状态标题、短说明和恢复操作。
+- 上方出现装饰 masthead，高度由 `layout.masthead.height` 控制。
+- Masthead 内包含居中或偏中的字标式标题。
+- Masthead 背后或两侧包含 1 到 3 条斜向色带。
+- 右上或局部角落包含十字点阵、星形或三角装饰。
+- Masthead 下方出现分类 tabs、公告信息条和媒体流标题。
+- 下方内容必须露出，禁止 masthead 占满视口。
+- 移动端可隐藏 decorative masthead 和分类 tabs，把首屏优先交给 TopBar、AnnouncementBar、媒体流标题和双列内容网格；这属于同一视觉系统的 app-shell 变体。
 
 ## Section 节奏
 
-- 每个 section 使用清晰标题、可选说明、主体内容和可选操作。
-- section 内部间距使用 16px 到 24px。
-- section 之间使用 32px 到 56px。
-- 同一页面最多保留一个强 CTA 分区，其余操作保持轻量。
+- `masthead-section`: 页面气质与导航过渡。
+- `category-section`: 横向 tabs 或移动可滚动 tabs。
+- `announcement-section`: 信息图标、短标题、正文、可选链接。
+- `feed-section`: 分区标题、计数徽标、媒体卡片网格。
+- `feature-section`: 三到六个短功能点，可用于产品页。
+- `conversion-section`: 短标题、短说明、主操作和次操作。
+- `footer-section`: 低对比链接、语言/主题入口和维护说明。
+
+分区顺序可调整，但内容浏览页应优先展示 masthead、分类、公告和媒体流。
 
 ## Hero 模式
 
-- `compact-brand-hero`: 居中展示短标题、说明和一个主操作，适合轻产品介绍。
-- `media-led-hero`: 左侧文案右侧 16:9 媒体槽，移动端改为文案在上媒体在下。
-- `community-dashboard-hero`: 顶部保留公告或状态条，下方直接进入内容网格。
-- `soft-empty-hero`: 用于空状态或 404 类页面，使用大字号状态、短说明、单按钮和柔和几何背景。
+- `decorative-masthead`: 字标式标题居中，斜向色带穿过背景，几何装饰贴边。
+- `compact-product-hero`: 左侧短标题和说明，右侧媒体槽，顶部仍保留轻装饰。
+- `state-hero`: 大号状态码或状态标题，下方使用几何山形/折线作为视觉锚点。
+
+禁止使用大幅营销图占满首屏。Hero 必须让下方 section 有可见提示。
 
 ## 内容区模式
 
-- `feed-grid`: 自动填充卡片网格，最小列宽 226px。
-- `featured-strip`: 横向展示重点内容，移动端改为横向滚动轨道或单列。
-- `category-tabs`: 使用轻量文本或徽标切换，不使用厚重 tab 容器。
-- `announcement-card`: 白色或浅层表面，左侧信息图标，右侧标题与正文。
+- 公告使用白色或轻玻璃表面，宽度跟随内容容器。
+- 分类 tabs 使用横向文本按钮，首页 active 优先使用主色文字和短底线；筛选场景才使用 pill/filled selected。
+- 分区标题可由小图标、标题和数量 badge 组成。
+- 信息密度优先服务浏览，不为装饰牺牲卡片可读性。
 
 ## 卡片区模式
 
-- 默认卡片使用 16:9 媒体、两行标题、作者、播放量、时长、日期。
-- 卡片不强制外框；hover 时浮起并显示轻阴影。
-- 列表模式使用左侧小媒体、右侧文本和横排元信息。
-- 移动端卡片可 1 列或 2 列；宽度不足时优先 1 列。
+- 默认使用自动填充网格：`repeat(auto-fit, minmax(var(--grid-feed-min), 1fr))` 或对应框架的 `grid.feed.min` 绑定。
+- 桌面卡片最小宽度使用 `grid.feed.min`，间距使用 `grid.feed.gap`。
+- 首页媒体卡片默认是平面链接卡：外层不使用 Paper 背景和阴影，封面槽使用 `grid.media.aspect`，正文区必须使用 token-backed padding 避免标题/元信息贴边。
+- 桌面高密度首页可让外层点击宽度由 `grid.feed.min` 控制，封面视觉宽度由 `grid.media.coverWidth` 控制，形成 5 列左右的内容密度。
+- 平板使用 2 到 3 列。
+- 移动端宽度充足时可双列，不足时单列。
+- 列表模式使用左侧小媒体、右侧标题和横排元信息。
 
 ## CTA 区模式
 
-- `inline-cta`: 放在 section 标题右侧或下方，使用主按钮加次按钮。
-- `soft-panel-cta`: 轻背景卡片，含标题、短说明和 1 到 2 个操作。
-- `bottom-cta`: 移动端可固定在内容底部附近，但不得遮挡底部导航。
+- CTA 必须比媒体流弱，不得抢走内容入口。
+- 可使用浅粉背景、短标题、短说明和 1 到 2 个按钮。
+- 移动端按钮可全宽或上下排列。
+- CTA 不得遮挡底部导航。
 
 ## 页脚模式
 
-- 页脚应低对比、低密度。
-- 内容包括短说明、链接组、版权占位和可选语言/主题入口。
-- 移动端链接组改为堆叠或两列。
+- 页脚使用低对比文字、轻分割线和紧凑链接组。
+- 页脚不得承载关键主操作。
+- 移动端链接组可两列或单列。
 
 ## 栅格规则
 
-- 桌面内容网格使用 `repeat(auto-fill, minmax(226px, 1fr))`。
-- 卡片视觉间距使用 16px；需要贴合时可把 grid gap 设为 0，并在卡片内部设置 8px 到 9px padding。
-- 重点模块可使用 12 列栅格，但卡片流优先自动填充。
-- 列表模式使用单列。
+- 内容容器最大宽度默认使用 `container.content.max`。
+- 桌面左右 padding 默认使用 `container.content.paddingDesktop`，同时避开 `size.nav.rail` 窄轨。
+- 平板 padding 默认使用 `container.content.paddingTablet`。
+- 移动 padding 默认使用 `container.content.paddingMobile`。
+- 媒体封面默认 16:9。
+- 固定导航与内容之间至少保留 `spacing.4` 可读间距。
 
 ## 容器宽度
 
-- 桌面容器最大 1280px，左右 padding 使用 5vw 或 64px。
-- 平板容器左右 padding 使用 24px。
-- 移动容器左右 padding 使用 16px。
-- 固定导航占位必须从可用宽度中扣除。
+- `container.content.max`: 页面主体最大宽度。
+- `container.feed.max`: 媒体流最大宽度，可等于主体宽度。
+- `container.narrow.max`: 表单、设置和说明类内容最大宽度。
+- `container.fullBleed.safe`: 装饰层可全宽，但内容必须受容器约束。
 
-## 响应式重排
+## 响应式重排方式
 
-- 侧边栏在移动端变为顶部栏。
-- 桌面内容导航可横向展示；移动端主导航放入底部栏。
-- 公告条在移动端可横向超出时必须允许换行。
-- 卡片网格在移动端不得依赖不可见横向滚动承载主要内容。
+- `breakpoint.desktop.min` 及以上：显示桌面窄轨，隐藏移动底栏，masthead 装饰完整。
+- `breakpoint.mobile.max` 到 `breakpoint.tablet.max`：可保留窄轨或压缩导航，内容 grid 2 到 3 列，装饰减少密度。
+- `breakpoint.mobile.max` 及以下：显示顶部栏和底部导航，隐藏桌面窄轨，内容 padding 使用 `container.content.paddingMobile`；首页可隐藏 masthead 和分类 tabs，把公告和媒体流上移。
+- 公告和 tabs 在移动端必须换行或明确横向滚动，不得产生页面级横向溢出。
 
 ## 常见页面模板
 
-- `homepage`: app bar、导航、公告、最新内容网格、推荐分区、页脚。
-- `landing`: hero、功能区、媒体展示、优势列表、CTA、页脚。
-- `product-section`: 标题、说明、媒体槽、特性列表、状态说明、操作。
-- `mobile-page`: 顶部栏、内容摘要、双列或单列卡片、底部导航、轻反馈。
+- `homepage`: 装饰 masthead、分类 tabs、公告、媒体流、功能区、CTA、页脚。
+- `discovery`: 顶部栏、筛选 tabs、公告、媒体网格、loading/empty/error 分支。
+- `landing`: compact product hero、功能区、媒体演示、CTA、页脚。
+- `product-section`: 小型装饰标题、媒体槽、功能列表、轻 CTA。
+- `mobile-page`: 顶部栏、公告、tabs、单/双列卡片、底部导航、toast。
+- `state-page`: 状态标题、短说明、恢复操作、几何山形或斜线底部装饰。
 
 ## 可替代布局组合
 
-- 侧边导航可替换为顶部横向导航，但底部移动导航仍需保留。
-- 内容网格可替换为列表、分组网格或横向轨道。
-- 公告条可替换为 toast、inline alert 或 soft panel。
-- hero 可被内容网格直接取代，适合内容优先页面。
+- 窄轨可替换为顶部横向导航，但移动底部导航仍需保留。
+- Masthead 可替换为紧凑装饰标题，但必须保留字标式节奏和几何装饰。
+- 公告条可替换为 inline alert、toast 或 soft panel。
+- 媒体网格可替换为列表、横向 rail 或精选卡片，但 16:9 媒体比例应保留。
+- CTA 可替换为表单、订阅条或轻提示，不得强营销化。
 
-## 过度拟合规避
+## 过拟合规避规则
 
-- 不固定分区数量。
-- 不固定导航项名称。
-- 不固定卡片数量。
-- 不固定 CTA 文案。
-- 不固定媒体内容。
-- 保留布局语法和比例，不保留具体页面顺序。
+- 不固定具体导航项、分类名、文案、媒体标题或业务数据。
+- 不复制专有图标、logo、图片和插画。
+- 不把首屏顺序写死；只要求关键模块在首屏附近建立视觉和浏览入口。
+- 不把装饰图形做成不可替换资产；必须用 CSS、token 或通用矢量形状表达。
+- 不因高识别度牺牲可读性、可访问性和响应式稳定性。

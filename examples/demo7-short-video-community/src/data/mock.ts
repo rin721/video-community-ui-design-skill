@@ -1,0 +1,594 @@
+export type ViewState = "ready" | "loading" | "empty" | "error";
+
+export type VideoTone = "rose" | "mint" | "gold" | "sky" | "violet" | "mono";
+
+export type CategoryItem = {
+  id: string;
+  label: string;
+  count: number;
+};
+
+export type TopicItem = {
+  id: string;
+  label: string;
+  description: string;
+  videoIds: string[];
+  tone: VideoTone;
+};
+
+export type CreatorProfile = {
+  id: string;
+  name: string;
+  handle: string;
+  bio: string;
+  followers: string;
+  following: string;
+  videos: number;
+  tone: VideoTone;
+  verified: boolean;
+};
+
+export type VideoItem = {
+  id: string;
+  title: string;
+  creatorId: string;
+  duration: string;
+  durationSeconds: number;
+  date: string;
+  views: string;
+  likes: number;
+  dislikes: number;
+  favorites: number;
+  category: string;
+  topicIds: string[];
+  sourceType: "original" | "repost";
+  tags: string[];
+  description: string;
+  tone: VideoTone;
+  thumbnailAlt: string;
+};
+
+export type CommentItem = {
+  id: string;
+  videoId: string;
+  author: string;
+  handle: string;
+  body: string;
+  date: string;
+  likes: number;
+  owned?: boolean;
+};
+
+export type ReplyItem = {
+  id: string;
+  commentId: string;
+  author: string;
+  handle: string;
+  body: string;
+  date: string;
+  owned?: boolean;
+};
+
+export type DanmakuItem = {
+  id: string;
+  videoId: string;
+  time: string;
+  timeSeconds: number;
+  body: string;
+  date: string;
+};
+
+export type NotificationItem = {
+  id: string;
+  type: "like" | "comment" | "follow" | "system" | "upload";
+  title: string;
+  body: string;
+  date: string;
+  read: boolean;
+  videoId?: string;
+};
+
+export type CollectionItem = {
+  id: string;
+  title: string;
+  description: string;
+  videoIds: string[];
+  visibility: "public" | "private";
+};
+
+export type UploadDraft = {
+  title: string;
+  category: string;
+  sourceType: "original" | "repost";
+  visibility: "public" | "private" | "unlisted";
+  description: string;
+  tags: string;
+};
+
+export type PlayerState = {
+  playing: boolean;
+  progress: number;
+  quality: string;
+  speed: string;
+  volume: number;
+  danmakuVisible: boolean;
+  fullscreen: boolean;
+};
+
+export const categories: CategoryItem[] = [
+  { id: "all", label: "综合", count: 18 },
+  { id: "motion", label: "动画", count: 5 },
+  { id: "music", label: "音乐", count: 3 },
+  { id: "daily", label: "日常", count: 4 },
+  { id: "design", label: "设计", count: 4 },
+  { id: "tech", label: "科技", count: 2 },
+];
+
+export const topics: TopicItem[] = [
+  {
+    id: "cover-lab",
+    label: "封面实验室",
+    description: "围绕封面构图、标题安全区和轻量占位图的创作练习。",
+    videoIds: ["video-01", "video-03", "video-08"],
+    tone: "rose",
+  },
+  {
+    id: "mobile-flow",
+    label: "移动浏览",
+    description: "记录移动端导航、底部安全区和单手操作的界面验证。",
+    videoIds: ["video-02", "video-05", "video-09"],
+    tone: "mint",
+  },
+  {
+    id: "comment-room",
+    label: "评论小屋",
+    description: "把评论、回复、弹幕和通知做成可扫描的社区反馈流。",
+    videoIds: ["video-04", "video-06", "video-10"],
+    tone: "sky",
+  },
+  {
+    id: "sound-cuts",
+    label: "声音剪影",
+    description: "中性 mock 音乐片段、节奏拆解和投稿前检查。",
+    videoIds: ["video-07", "video-11", "video-12"],
+    tone: "gold",
+  },
+];
+
+export const creators: CreatorProfile[] = [
+  {
+    id: "creator-01",
+    name: "晨光剪辑室",
+    handle: "@soft-cuts",
+    bio: "分享轻量短视频创作、转场节奏和社区内容实验。",
+    followers: "18.2k",
+    following: "128",
+    videos: 38,
+    tone: "rose",
+    verified: true,
+  },
+  {
+    id: "creator-02",
+    name: "午后声音所",
+    handle: "@sound-room",
+    bio: "收集音乐片段、声音设计和小型现场记录。",
+    followers: "9.7k",
+    following: "92",
+    videos: 24,
+    tone: "gold",
+    verified: false,
+  },
+  {
+    id: "creator-03",
+    name: "界面观察台",
+    handle: "@ui-observe",
+    bio: "用短视频拆解信息架构、动效和界面细节。",
+    followers: "22.4k",
+    following: "74",
+    videos: 42,
+    tone: "sky",
+    verified: true,
+  },
+  {
+    id: "creator-04",
+    name: "日常采样器",
+    handle: "@daily-sample",
+    bio: "记录城市小片段、生活技巧和温和的社区议题。",
+    followers: "13.5k",
+    following: "146",
+    videos: 31,
+    tone: "mint",
+    verified: false,
+  },
+  {
+    id: "creator-05",
+    name: "弹幕整理员",
+    handle: "@danmaku-note",
+    bio: "把弹幕、回复和通知整理成可回看的社区线索。",
+    followers: "7.8k",
+    following: "63",
+    videos: 17,
+    tone: "violet",
+    verified: false,
+  },
+];
+
+export const videos: VideoItem[] = [
+  {
+    id: "video-01",
+    title: "三步做出轻盈的开场转场",
+    creatorId: "creator-01",
+    duration: "00:42",
+    durationSeconds: 42,
+    date: "2026/06/24 12:59",
+    views: "12.8k",
+    likes: 2180,
+    dislikes: 16,
+    favorites: 642,
+    category: "motion",
+    topicIds: ["cover-lab"],
+    sourceType: "original",
+    tags: ["转场", "剪辑", "新手"],
+    description: "用遮罩、节奏点和封面色块做一个短视频开场。素材均为 CSS 占位，方便替换。",
+    tone: "rose",
+    thumbnailAlt: "粉色几何渐变视频封面占位",
+  },
+  {
+    id: "video-02",
+    title: "移动端三段信息面板的折叠策略",
+    creatorId: "creator-03",
+    duration: "01:16",
+    durationSeconds: 76,
+    date: "2026/06/23 09:18",
+    views: "21.1k",
+    likes: 3890,
+    dislikes: 21,
+    favorites: 1210,
+    category: "design",
+    topicIds: ["mobile-flow", "comment-room"],
+    sourceType: "original",
+    tags: ["移动端", "Tabs", "信息"],
+    description: "把信息、评论和弹幕压缩进移动端同一视频详情流。",
+    tone: "sky",
+    thumbnailAlt: "蓝色几何渐变视频封面占位",
+  },
+  {
+    id: "video-03",
+    title: "媒体卡片为什么要保留两行标题",
+    creatorId: "creator-03",
+    duration: "00:53",
+    durationSeconds: 53,
+    date: "2026/06/22 20:10",
+    views: "14.6k",
+    likes: 2060,
+    dislikes: 11,
+    favorites: 510,
+    category: "design",
+    topicIds: ["cover-lab"],
+    sourceType: "repost",
+    tags: ["UI", "卡片", "信息密度"],
+    description: "用一个媒体社区样例解释标题、作者、时长和计数的扫描顺序。",
+    tone: "violet",
+    thumbnailAlt: "紫色几何渐变视频封面占位",
+  },
+  {
+    id: "video-04",
+    title: "一条评论如何变成社区话题",
+    creatorId: "creator-04",
+    duration: "00:37",
+    durationSeconds: 37,
+    date: "2026/06/21 18:30",
+    views: "6.9k",
+    likes: 832,
+    dislikes: 3,
+    favorites: 166,
+    category: "daily",
+    topicIds: ["comment-room"],
+    sourceType: "original",
+    tags: ["评论", "社区", "互动"],
+    description: "模拟一个从评论区延伸出来的轻讨论，不涉及真实用户数据。",
+    tone: "mint",
+    thumbnailAlt: "薄荷色几何渐变视频封面占位",
+  },
+  {
+    id: "video-05",
+    title: "底部导航的安全区检查",
+    creatorId: "creator-03",
+    duration: "01:04",
+    durationSeconds: 64,
+    date: "2026/06/19 14:04",
+    views: "10.2k",
+    likes: 1750,
+    dislikes: 12,
+    favorites: 421,
+    category: "tech",
+    topicIds: ["mobile-flow"],
+    sourceType: "original",
+    tags: ["移动端", "导航", "可访问性"],
+    description: "用 mock 页面验证底部导航不会遮挡最后一屏内容。",
+    tone: "gold",
+    thumbnailAlt: "金色几何渐变视频封面占位",
+  },
+  {
+    id: "video-06",
+    title: "评论工具栏的轻量实现",
+    creatorId: "creator-05",
+    duration: "01:28",
+    durationSeconds: 88,
+    date: "2026/06/18 10:25",
+    views: "7.2k",
+    likes: 1088,
+    dislikes: 6,
+    favorites: 540,
+    category: "tech",
+    topicIds: ["comment-room"],
+    sourceType: "original",
+    tags: ["评论", "编辑器", "社区"],
+    description: "演示粗体、斜体、提及和表情入口的 mock 状态。",
+    tone: "mono",
+    thumbnailAlt: "中性色几何渐变视频封面占位",
+  },
+  {
+    id: "video-07",
+    title: "用环境声做 15 秒日常片头",
+    creatorId: "creator-02",
+    duration: "00:58",
+    durationSeconds: 58,
+    date: "2026/06/17 11:42",
+    views: "8.4k",
+    likes: 1420,
+    dislikes: 9,
+    favorites: 388,
+    category: "music",
+    topicIds: ["sound-cuts"],
+    sourceType: "original",
+    tags: ["声音", "片头", "日常"],
+    description: "从脚步声、杯子声和短和弦里整理一个可复用的片头节奏。",
+    tone: "gold",
+    thumbnailAlt: "暖金色几何渐变视频封面占位",
+  },
+  {
+    id: "video-08",
+    title: "封面安全区：标题不再撞边",
+    creatorId: "creator-01",
+    duration: "00:49",
+    durationSeconds: 49,
+    date: "2026/06/16 16:02",
+    views: "5.5k",
+    likes: 721,
+    dislikes: 4,
+    favorites: 210,
+    category: "motion",
+    topicIds: ["cover-lab", "mobile-flow"],
+    sourceType: "original",
+    tags: ["投稿", "封面", "标题"],
+    description: "投稿前检查封面、标签和简介，所有状态都在本地模拟。",
+    tone: "rose",
+    thumbnailAlt: "粉色和蓝色混合几何封面占位",
+  },
+  {
+    id: "video-09",
+    title: "单手浏览时的快捷反馈按钮",
+    creatorId: "creator-04",
+    duration: "00:31",
+    durationSeconds: 31,
+    date: "2026/06/15 08:30",
+    views: "9.8k",
+    likes: 1322,
+    dislikes: 14,
+    favorites: 302,
+    category: "daily",
+    topicIds: ["mobile-flow"],
+    sourceType: "repost",
+    tags: ["反馈", "单手", "移动端"],
+    description: "把不感兴趣、举报、稍后看做成轻量菜单，不打断浏览。",
+    tone: "mint",
+    thumbnailAlt: "薄荷色移动界面封面占位",
+  },
+  {
+    id: "video-10",
+    title: "弹幕表格如何服务回看与检索",
+    creatorId: "creator-05",
+    duration: "04:37",
+    durationSeconds: 277,
+    date: "2026/06/14 21:10",
+    views: "6.9k",
+    likes: 832,
+    dislikes: 3,
+    favorites: 166,
+    category: "tech",
+    topicIds: ["comment-room"],
+    sourceType: "original",
+    tags: ["弹幕", "表格", "检索"],
+    description: "把时间、内容和发送日期拆成可扫描的本地 mock 表格。",
+    tone: "violet",
+    thumbnailAlt: "紫色弹幕表格封面占位",
+  },
+  {
+    id: "video-11",
+    title: "轻量音乐片段的收藏体验",
+    creatorId: "creator-02",
+    duration: "01:12",
+    durationSeconds: 72,
+    date: "2026/06/13 17:34",
+    views: "7.7k",
+    likes: 1190,
+    dislikes: 5,
+    favorites: 488,
+    category: "music",
+    topicIds: ["sound-cuts"],
+    sourceType: "original",
+    tags: ["收藏", "声音", "素材"],
+    description: "用本地 state 模拟收藏、合集和 toast 反馈。",
+    tone: "gold",
+    thumbnailAlt: "金色和粉色几何封面占位",
+  },
+  {
+    id: "video-12",
+    title: "投稿草稿的字段顺序检查",
+    creatorId: "creator-01",
+    duration: "00:45",
+    durationSeconds: 45,
+    date: "2026/06/12 13:26",
+    views: "4.9k",
+    likes: 690,
+    dislikes: 2,
+    favorites: 188,
+    category: "motion",
+    topicIds: ["sound-cuts", "cover-lab"],
+    sourceType: "original",
+    tags: ["草稿", "字段", "校验"],
+    description: "让投稿流程覆盖标题、来源、可见性、标签和成功弹窗。",
+    tone: "sky",
+    thumbnailAlt: "天空蓝几何封面占位",
+  },
+];
+
+export const comments: CommentItem[] = [
+  {
+    id: "comment-01",
+    videoId: "video-01",
+    author: "星标用户",
+    handle: "@star-note",
+    body: "这个节奏点拆得很清楚，适合作为投稿前的检查清单。",
+    date: "2026/06/24 13:20",
+    likes: 24,
+  },
+  {
+    id: "comment-02",
+    videoId: "video-01",
+    author: "练习账号",
+    handle: "@practice",
+    body: "如果加一个封面安全区说明，新手会更容易复用。",
+    date: "2026/06/24 14:02",
+    likes: 12,
+  },
+  {
+    id: "comment-03",
+    videoId: "video-02",
+    author: "移动端测试号",
+    handle: "@mobile-check",
+    body: "移动 tabs 的信息密度刚好，底部输入也没有挡住内容。",
+    date: "2026/06/23 09:21",
+    likes: 18,
+  },
+  {
+    id: "comment-04",
+    videoId: "video-04",
+    author: "评论区观察员",
+    handle: "@thread-note",
+    body: "回复入口保持轻量很重要，不然媒体内容会被评论面板挤走。",
+    date: "2026/06/21 19:10",
+    likes: 31,
+  },
+];
+
+export const replies: ReplyItem[] = [
+  {
+    id: "reply-01",
+    commentId: "comment-01",
+    author: "晨光剪辑室",
+    handle: "@soft-cuts",
+    body: "下一版会把封面安全区做成一个固定检查项。",
+    date: "2026/06/24 15:16",
+  },
+  {
+    id: "reply-02",
+    commentId: "comment-04",
+    author: "示例创作者",
+    handle: "@demo-maker",
+    body: "同意，所以这里只保留一个输入框和删除自己的回复。",
+    date: "刚刚",
+    owned: true,
+  },
+];
+
+export const danmakus: DanmakuItem[] = [
+  { id: "danmaku-01", videoId: "video-01", time: "00:05", timeSeconds: 5, body: "这个开场很稳", date: "2026/06/24 13:22" },
+  { id: "danmaku-02", videoId: "video-01", time: "00:17", timeSeconds: 17, body: "封面色块可以复用", date: "2026/06/24 13:24" },
+  { id: "danmaku-03", videoId: "video-02", time: "00:12", timeSeconds: 12, body: "移动 tabs 很关键", date: "2026/06/23 09:21" },
+  { id: "danmaku-04", videoId: "video-10", time: "01:08", timeSeconds: 68, body: "右侧表格很好扫", date: "2026/06/14 21:18" },
+];
+
+export const notifications: NotificationItem[] = [
+  {
+    id: "notice-01",
+    type: "comment",
+    title: "评论区有新回复",
+    body: "有人回复了你的封面安全区建议。",
+    date: "10 分钟前",
+    read: false,
+    videoId: "video-01",
+  },
+  {
+    id: "notice-02",
+    type: "like",
+    title: "作品获得新的喜欢",
+    body: "示例用户喜欢了你的投稿草稿检查。",
+    date: "38 分钟前",
+    read: false,
+    videoId: "video-12",
+  },
+  {
+    id: "notice-03",
+    type: "follow",
+    title: "新的关注",
+    body: "午后声音所开始关注你的主页。",
+    date: "昨天",
+    read: true,
+  },
+  {
+    id: "notice-04",
+    type: "upload",
+    title: "投稿草稿已保存",
+    body: "本地 mock 已记录你的上一版投稿表单。",
+    date: "2 天前",
+    read: true,
+  },
+];
+
+export const collections: CollectionItem[] = [
+  {
+    id: "collection-01",
+    title: "封面与标题",
+    description: "封面安全区、媒体卡片和标题扫描顺序。",
+    videoIds: ["video-01", "video-03", "video-08"],
+    visibility: "public",
+  },
+  {
+    id: "collection-02",
+    title: "社区反馈流",
+    description: "评论、回复、弹幕、通知和举报反馈。",
+    videoIds: ["video-04", "video-06", "video-10"],
+    visibility: "private",
+  },
+];
+
+export const profile = {
+  id: "me",
+  name: "示例创作者",
+  handle: "@demo-maker",
+  bio: "用 mock 数据验证短视频社区的浏览、互动、投稿和个人内容管理体验。",
+  followers: "3.8k",
+  following: "86",
+  videos: 12,
+};
+
+export const draftUpload: UploadDraft = {
+  title: "",
+  category: "motion",
+  sourceType: "original",
+  visibility: "public",
+  description: "",
+  tags: "",
+};
+
+export const initialPlayerState: PlayerState = {
+  playing: false,
+  progress: 18,
+  quality: "720P",
+  speed: "1.0x",
+  volume: 72,
+  danmakuVisible: true,
+  fullscreen: false,
+};

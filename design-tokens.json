@@ -1,7 +1,7 @@
 {
   "meta": {
     "skillName": "video-community-ui-design-skill",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "format": "semantic-design-tokens"
   },
   "color": {
@@ -10,7 +10,7 @@
         "name": "color.brand.primary",
         "value": "#f06e8e",
         "role": "主强调色",
-        "usage": "用于激活导航、主按钮、徽标、进度、链接和关键状态",
+        "usage": "用于激活导航、字标、主按钮、徽标、进度、链接和关键状态",
         "confidence": "high",
         "modifiable": true,
         "fallback": "#e85f84"
@@ -19,16 +19,25 @@
         "name": "color.brand.soft",
         "value": "#fde8ef",
         "role": "浅强调背景",
-        "usage": "用于选中背景、柔和标签、轻提示和装饰色块",
+        "usage": "用于选中背景、公告边缘、柔和标签和装饰色块",
         "confidence": "high",
         "modifiable": true,
         "fallback": "#fce1ea"
       },
       {
+        "name": "color.brand.mist",
+        "value": "#fff6f9",
+        "role": "粉雾背景",
+        "usage": "用于页面局部、移动顶部栏、状态区和轻分区",
+        "confidence": "high",
+        "modifiable": true,
+        "fallback": "#fff7fa"
+      },
+      {
         "name": "color.brand.hover",
         "value": "#ee5e83",
         "role": "悬停强调色",
-        "usage": "用于按钮 hover、链接 hover 和图标 hover",
+        "usage": "用于按钮 hover、链接 hover、卡片标题 hover 和图标 hover",
         "confidence": "high",
         "modifiable": true,
         "fallback": "#e65379"
@@ -54,20 +63,20 @@
         "fallback": "#ffffff"
       },
       {
-        "name": "color.surface.soft",
-        "value": "#fff7fa",
-        "role": "浅层背景",
-        "usage": "用于顶部栏、底部栏、空状态和轻分区",
+        "name": "color.surface.page",
+        "value": "#fffafd",
+        "role": "页面浅底",
+        "usage": "用于整体页面底色和轻粉雾面",
         "confidence": "high",
         "modifiable": true,
-        "fallback": "#fff5f8"
+        "fallback": "#fff9fb"
       },
       {
         "name": "color.surface.card",
-        "value": "rgba(255,255,255,0.82)",
+        "value": "rgba(255,255,255,0.9)",
         "role": "卡片表面",
-        "usage": "用于悬浮卡片、公告条和弹层",
-        "confidence": "medium",
+        "usage": "用于公告条、浮层、卡片和 CTA",
+        "confidence": "high",
         "modifiable": true,
         "fallback": "#ffffff"
       },
@@ -79,12 +88,21 @@
         "confidence": "medium",
         "modifiable": true,
         "fallback": "#f5f5f5"
+      },
+      {
+        "name": "color.surface.glass",
+        "value": "rgba(255,255,255,0.76)",
+        "role": "玻璃表面",
+        "usage": "用于移动导航、toast、tooltip、drawer 和 flyout",
+        "confidence": "high",
+        "modifiable": true,
+        "fallback": "rgba(255,255,255,0.82)"
       }
     ],
     "text": [
       {
         "name": "color.text.primary",
-        "value": "#212121",
+        "value": "#222024",
         "role": "主文字",
         "usage": "用于标题、正文和关键元信息",
         "confidence": "high",
@@ -93,7 +111,7 @@
       },
       {
         "name": "color.text.secondary",
-        "value": "#616161",
+        "value": "#62545a",
         "role": "次级文字",
         "usage": "用于作者、说明、日期和辅助信息",
         "confidence": "high",
@@ -102,7 +120,7 @@
       },
       {
         "name": "color.text.muted",
-        "value": "#8a8a8a",
+        "value": "#8a7c82",
         "role": "弱文字",
         "usage": "用于占位、禁用和低优先级信息",
         "confidence": "medium",
@@ -173,7 +191,7 @@
     "fontFamily": [
       {
         "name": "typography.font.ui",
-        "value": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "value": "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
         "role": "界面字体",
         "usage": "用于所有界面文本",
         "confidence": "high",
@@ -182,9 +200,9 @@
       },
       {
         "name": "typography.font.display",
-        "value": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "value": "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
         "role": "展示字体",
-        "usage": "用于 hero、品牌文字和大标题",
+        "usage": "用于字标、masthead 和大标题",
         "confidence": "medium",
         "modifiable": true,
         "fallback": "system-ui, sans-serif"
@@ -219,21 +237,30 @@
         "fallback": "18px"
       },
       {
-        "name": "typography.size.hero",
-        "value": "40px",
-        "role": "展示标题字号",
-        "usage": "用于首屏或强调标题，移动端需降级",
-        "confidence": "medium",
+        "name": "typography.size.wordmark",
+        "value": "44px",
+        "role": "字标字号",
+        "usage": "用于桌面 masthead 字标式标题",
+        "confidence": "high",
         "modifiable": true,
-        "fallback": "36px"
+        "fallback": "40px"
+      },
+      {
+        "name": "typography.size.mobileWordmark",
+        "value": "20px",
+        "role": "移动字标字号",
+        "usage": "用于移动顶部栏和紧凑 masthead",
+        "confidence": "high",
+        "modifiable": true,
+        "fallback": "20px"
       }
     ],
     "lineHeight": [
       {
         "name": "typography.lineHeight.tight",
-        "value": "1.25",
+        "value": "1.2",
         "role": "紧凑行高",
-        "usage": "用于标题和导航",
+        "usage": "用于字标、标题和导航",
         "confidence": "high",
         "modifiable": true,
         "fallback": "1.25"
@@ -253,25 +280,25 @@
         "name": "typography.weight.medium",
         "value": "500",
         "role": "中等字重",
-        "usage": "用于卡片标题和按钮",
+        "usage": "用于按钮和辅助标题",
         "confidence": "high",
         "modifiable": true,
         "fallback": "500"
       },
       {
-        "name": "typography.weight.bold",
-        "value": "700",
-        "role": "强调字重",
-        "usage": "用于模块标题和重要提示",
+        "name": "typography.weight.semibold",
+        "value": "600",
+        "role": "半粗字重",
+        "usage": "用于卡片标题和导航激活项",
         "confidence": "high",
         "modifiable": true,
-        "fallback": "700"
+        "fallback": "600"
       },
       {
-        "name": "typography.weight.black",
-        "value": "900",
-        "role": "展示字重",
-        "usage": "用于大号展示标题",
+        "name": "typography.weight.brand",
+        "value": "800",
+        "role": "字标字重",
+        "usage": "用于字标和 masthead 展示标题",
         "confidence": "medium",
         "modifiable": true,
         "fallback": "800"
@@ -319,7 +346,7 @@
       "name": "spacing.4",
       "value": "16px",
       "role": "内容间距",
-      "usage": "用于公告条、分区和移动端 padding",
+      "usage": "用于公告、分区和移动端 padding",
       "confidence": "high",
       "modifiable": true,
       "fallback": "16px"
@@ -337,7 +364,7 @@
       "name": "spacing.8",
       "value": "32px",
       "role": "大模块间距",
-      "usage": "用于桌面分区、hero 内边距和 CTA",
+      "usage": "用于桌面分区、masthead 后续间距和 CTA",
       "confidence": "medium",
       "modifiable": true,
       "fallback": "32px"
@@ -350,15 +377,6 @@
       "confidence": "medium",
       "modifiable": true,
       "fallback": "48px"
-    },
-    {
-      "name": "spacing.content.desktop",
-      "value": "5vw",
-      "role": "桌面横向留白",
-      "usage": "用于主内容容器左右 padding",
-      "confidence": "high",
-      "modifiable": true,
-      "fallback": "64px"
     }
   ],
   "radius": [
@@ -375,7 +393,7 @@
       "name": "radius.card.default",
       "value": "6px",
       "role": "卡片圆角",
-      "usage": "用于卡片、图片、弹层、输入框和公告条",
+      "usage": "用于卡片、图片、弹层、输入框和公告",
       "confidence": "high",
       "modifiable": true,
       "fallback": "6px"
@@ -401,6 +419,15 @@
       "fallback": "0 2px 6px rgba(0,0,0,0.12)"
     },
     {
+      "name": "shadow.card.soft",
+      "value": "0 2px 6px rgba(116,92,104,0.18), 0 0 4px rgba(116,92,104,0.08)",
+      "role": "卡片柔影",
+      "usage": "用于公告、Paper 表面、toast 和轻 CTA；首页媒体链接卡默认保持平面，不使用此阴影",
+      "confidence": "high",
+      "modifiable": true,
+      "fallback": "0 2px 6px rgba(0,0,0,0.08)"
+    },
+    {
       "name": "shadow.card.hover",
       "value": "0 8px 16px rgba(240,110,142,0.18)",
       "role": "卡片悬停阴影",
@@ -410,10 +437,19 @@
       "fallback": "0 8px 16px rgba(0,0,0,0.12)"
     },
     {
-      "name": "shadow.nav.soft",
+      "name": "shadow.card.elevated",
+      "value": "0 8px 16px rgba(240,110,142,0.24)",
+      "role": "浮层阴影",
+      "usage": "用于 drawer、tooltip、toast 和 modal",
+      "confidence": "high",
+      "modifiable": true,
+      "fallback": "0 12px 24px rgba(0,0,0,0.14)"
+    },
+    {
+      "name": "shadow.nav.glow",
       "value": "0 0 24px rgba(240,110,142,0.24)",
       "role": "导航柔光",
-      "usage": "用于固定侧栏、底部导航和轻玻璃层",
+      "usage": "用于固定侧栏、底部导航和移动顶部栏",
       "confidence": "high",
       "modifiable": true,
       "fallback": "0 0 18px rgba(0,0,0,0.10)"
@@ -422,7 +458,7 @@
   "border": [
     {
       "name": "border.divider.default",
-      "value": "1px solid rgba(0,0,0,0.08)",
+      "value": "1px solid rgba(34,32,36,0.08)",
       "role": "弱分割线",
       "usage": "用于导航、分区和列表边界",
       "confidence": "medium",
@@ -489,33 +525,60 @@
         "fallback": "ease-out"
       },
       {
-        "name": "motion.easing.emphasized",
+        "name": "motion.easing.progress",
+        "value": "cubic-bezier(.1,.9,.2,1)",
+        "role": "进度缓动",
+        "usage": "用于页面进度、drawer 位移和图片淡入",
+        "confidence": "medium",
+        "modifiable": true,
+        "fallback": "ease-out"
+      },
+      {
+        "name": "motion.easing.spring",
         "value": "cubic-bezier(.175,.885,.32,1.275)",
         "role": "轻弹性缓动",
-        "usage": "用于按钮、导航项和小装饰进入",
+        "usage": "用于导航项、字标和小装饰进入",
         "confidence": "medium",
         "modifiable": true,
         "fallback": "cubic-bezier(.2,.8,.2,1)"
       }
     ],
     "transform": [
-      {
-        "name": "motion.transform.cardHover",
-        "value": "translateY(-6px)",
-        "role": "卡片悬停位移",
-        "usage": "用于内容卡片 hover",
-        "confidence": "high",
-        "modifiable": true,
-        "fallback": "translateY(-4px)"
+    {
+      "name": "motion.transform.cardHover",
+      "value": "translateY(-2px)",
+      "role": "卡片悬停位移",
+      "usage": "用于 framed card、CTA 和浮层入口 hover；首页媒体链接卡不整体上浮",
+      "confidence": "high",
+      "modifiable": true,
+      "fallback": "translateY(-2px)"
+    },
+    {
+      "name": "motion.transform.mediaHover",
+      "value": "scale(1.012)",
+      "role": "媒体封面悬停缩放",
+      "usage": "用于平面媒体卡片中的封面槽 hover，不改变外层网格尺寸",
+      "confidence": "high",
+      "modifiable": true,
+      "fallback": "scale(1.01)"
       },
       {
         "name": "motion.transform.pressScale",
         "value": "scale(0.972)",
         "role": "按压缩放",
-        "usage": "用于按钮、卡片和图标按钮 active",
+        "usage": "用于按钮、卡片、tab 和图标按钮 active",
         "confidence": "high",
         "modifiable": true,
         "fallback": "scale(0.98)"
+      },
+      {
+        "name": "motion.transform.offcanvasViewport",
+        "value": "translate(60vw) scale(.8)",
+        "role": "抽屉打开视图位移",
+        "usage": "用于 offcanvas 打开时背景内容层",
+        "confidence": "medium",
+        "modifiable": true,
+        "fallback": "translateX(48vw) scale(.88)"
       }
     ]
   },
@@ -559,6 +622,15 @@
       "fallback": "0"
     },
     {
+      "name": "zIndex.decoration",
+      "value": "1",
+      "role": "装饰层",
+      "usage": "用于 masthead 背景装饰",
+      "confidence": "high",
+      "modifiable": true,
+      "fallback": "1"
+    },
+    {
       "name": "zIndex.nav",
       "value": "30",
       "role": "导航层",
@@ -597,13 +669,22 @@
   ],
   "opacity": [
     {
-      "name": "opacity.decorative",
-      "value": "0.2",
-      "role": "背景装饰透明度",
-      "usage": "用于低干扰背景图形或色块",
+      "name": "opacity.decorative.masthead",
+      "value": "0.24",
+      "role": "首屏装饰透明度",
+      "usage": "用于斜向色带和低干扰几何",
       "confidence": "medium",
       "modifiable": true,
-      "fallback": "0.16"
+      "fallback": "0.2"
+    },
+    {
+      "name": "opacity.decorative.subtle",
+      "value": "0.14",
+      "role": "弱装饰透明度",
+      "usage": "用于背景点阵、状态页几何和移动端装饰",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "0.12"
     },
     {
       "name": "opacity.disabled",
@@ -629,19 +710,19 @@
       "name": "blur.glass",
       "value": "16px",
       "role": "玻璃模糊",
-      "usage": "用于底部导航、弹层、tooltip 和 toast",
+      "usage": "用于底部导航、弹层、tooltip、toast 和 drawer",
       "confidence": "high",
       "modifiable": true,
       "fallback": "12px"
     },
     {
-      "name": "blur.scrollbar",
-      "value": "8px",
-      "role": "滚动条模糊",
-      "usage": "用于自定义滚动条滑块",
+      "name": "blur.mediaPlaceholder",
+      "value": "18px",
+      "role": "媒体占位模糊",
+      "usage": "用于无图片媒体卡片和加载占位",
       "confidence": "medium",
       "modifiable": true,
-      "fallback": "6px"
+      "fallback": "14px"
     }
   ],
   "container": [
@@ -653,6 +734,24 @@
       "confidence": "medium",
       "modifiable": true,
       "fallback": "1200px"
+    },
+    {
+      "name": "container.feed.max",
+      "value": "1280px",
+      "role": "媒体流最大宽度",
+      "usage": "用于媒体网格和列表",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "1200px"
+    },
+    {
+      "name": "container.narrow.max",
+      "value": "760px",
+      "role": "窄内容最大宽度",
+      "usage": "用于表单、设置、说明和状态页文本",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "720px"
     },
     {
       "name": "container.content.paddingDesktop",
@@ -684,18 +783,18 @@
   ],
   "grid": [
     {
-      "name": "grid.card.min",
-      "value": "226px",
-      "role": "卡片最小列宽",
-      "usage": "用于内容卡片自动填充网格",
+      "name": "grid.feed.min",
+      "value": "238px",
+      "role": "媒体卡片外层点击宽度",
+      "usage": "用于内容卡片自动填充网格和 MUI CardActionArea 外层节奏",
       "confidence": "high",
       "modifiable": true,
-      "fallback": "220px"
+      "fallback": "226px"
     },
     {
-      "name": "grid.card.gap",
+      "name": "grid.feed.gap",
       "value": "16px",
-      "role": "卡片视觉间距",
+      "role": "媒体卡片间距",
       "usage": "用于卡片之间的可读间隔",
       "confidence": "medium",
       "modifiable": true,
@@ -709,6 +808,15 @@
       "confidence": "high",
       "modifiable": true,
       "fallback": "16 / 9"
+    },
+    {
+      "name": "grid.media.coverWidth",
+      "value": "220px",
+      "role": "桌面媒体封面视觉宽度",
+      "usage": "用于桌面平面媒体卡的 16:9 封面槽；外层点击宽度仍由 grid.feed.min 控制",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "220px"
     }
   ],
   "size": [
@@ -740,6 +848,15 @@
       "fallback": "40px"
     },
     {
+      "name": "size.control.action",
+      "value": "48px",
+      "role": "详情页动作按钮尺寸",
+      "usage": "用于点赞、收藏、分享、播放详情等圆形动作按钮",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "48px"
+    },
+    {
       "name": "size.touch.min",
       "value": "44px",
       "role": "最小触控目标",
@@ -765,6 +882,109 @@
       "confidence": "medium",
       "modifiable": true,
       "fallback": "44px"
+    }
+  ],
+  "layout": [
+    {
+      "name": "layout.masthead.height",
+      "value": "140px",
+      "role": "桌面 masthead 高度",
+      "usage": "用于装饰首屏区域",
+      "confidence": "high",
+      "modifiable": true,
+      "fallback": "140px"
+    },
+    {
+      "name": "layout.masthead.mobileHeight",
+      "value": "88px",
+      "role": "移动 masthead 高度",
+      "usage": "用于移动端紧凑装饰标题",
+      "confidence": "high",
+      "modifiable": true,
+      "fallback": "80px"
+    },
+    {
+      "name": "layout.category.height",
+      "value": "48px",
+      "role": "分类导航高度",
+      "usage": "用于 tabs 区域和首屏节奏",
+      "confidence": "high",
+      "modifiable": true,
+      "fallback": "48px"
+    },
+    {
+      "name": "layout.announcement.minHeight",
+      "value": "76px",
+      "role": "公告最小高度",
+      "usage": "用于信息条稳定占位",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "72px"
+    }
+  ],
+  "decoration": [
+    {
+      "name": "decoration.stripe.width",
+      "value": "120px",
+      "role": "斜向色带宽度",
+      "usage": "用于 masthead 斜向背景色带",
+      "confidence": "high",
+      "modifiable": true,
+      "fallback": "96px"
+    },
+    {
+      "name": "decoration.stripe.angle",
+      "value": "-32deg",
+      "role": "斜向色带角度",
+      "usage": "用于首屏和窄轨条纹",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "-28deg"
+    },
+    {
+      "name": "decoration.star.size",
+      "value": "34px",
+      "role": "星形装饰尺寸",
+      "usage": "用于字标旁和窄轨中段",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "28px"
+    },
+    {
+      "name": "decoration.plus.size",
+      "value": "14px",
+      "role": "十字点尺寸",
+      "usage": "用于点阵装饰和角落强调",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "12px"
+    },
+    {
+      "name": "decoration.plus.gap",
+      "value": "28px",
+      "role": "十字点阵间距",
+      "usage": "用于 masthead 右侧或状态页点阵",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "24px"
+    },
+    {
+      "name": "decoration.triangle.size",
+      "value": "28px",
+      "role": "三角角标尺寸",
+      "usage": "用于 masthead 边缘和状态图形",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "24px"
+    },
+    {
+      "name": "decoration.state.peakHeight",
+      "value": "140px",
+      "role": "状态页几何高度",
+      "usage": "用于 empty 和 error 的底部几何装饰",
+      "confidence": "medium",
+      "modifiable": true,
+      "fallback": "120px"
     }
   ]
 }

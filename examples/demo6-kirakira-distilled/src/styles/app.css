@@ -1,0 +1,21 @@
+:root {
+  color-scheme: light;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  color: var(--color-brand-primary);
+  background: var(--color-brand-soft);
+}
+
+@keyframes demo6-danmaku-float {
+  from {
+    transform: translateX(18%);
+  }
+  to {
+    transform: translateX(-110%);
+  }
+}

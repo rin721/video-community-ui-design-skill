@@ -2,56 +2,58 @@
 
 ## 输入需求
 
-- 页面类型：landing
-- 目标：展示一个轻量内容服务的价值、功能和行动入口
-- 输出形式：UI design spec
-- 技术栈：未指定
+- `page_type`: `landing`
+- `audience`: 轻量媒体产品用户
+- `output_mode`: `html-css`
+- `brand_overrides`: 默认主色
 
 ## 使用到的 Skill 规则
 
-- `style-profile.md`: 轻盈浅色、柔和强调色、内容优先。
-- `layout-patterns.md`: `media-led-hero`、功能列表、媒体展示、soft panel CTA。
-- `component-recipes.md`: Hero、Feature List、Media Block、CTA、Footer。
-- `responsive-rules.md`: desktop 双列，mobile 堆叠。
-- `validation-checklist.md`: token、状态、响应式和可访问性。
+- `style-profile.md`: 浅底樱粉、字标式标题、几何装饰、轻玻璃。
+- `layout-patterns.md`: compact product hero、功能区、媒体展示、CTA、页脚。
+- `component-recipes.md`: DecorativeMasthead、FeatureList、MediaBlock、CTA、Footer。
+- `interaction-rules.md`: hover、focus、active、reduced motion。
+- `responsive-rules.md`: desktop/tablet/mobile 重排。
 
 ## 生成策略
 
-页面先用短 hero 建立价值，再用功能列表解释能力，随后用媒体块展示内容形态，最后使用柔和 CTA 引导行动。整体不使用大面积深色背景，重点信息通过标题、媒体比例和主色按钮建立。
+Landing page 使用紧凑 hero，不占满首屏。顶部保留字标式标题和斜向色带，下方露出功能区。主操作只保留一个强按钮，一个次按钮。媒体展示使用 16:9 可替换槽。
 
 ## 结构草案
 
-1. 顶部导航：短名称、主入口、一个主操作。
-2. Hero：标题、说明、主按钮、次按钮、16:9 媒体槽。
-3. 功能区：三到六个功能点，每项包含图标、短标题、短说明。
-4. 媒体展示：内容卡片网格或精选轨道。
-5. CTA：浅强调背景、短说明、一个主操作。
-6. 页脚：链接组和说明。
+1. TopBar / SidebarRail。
+2. Compact Decorative Hero。
+3. FeatureList 三到六项。
+4. MediaBlock。
+5. CTA。
+6. Footer。
 
 ## Token 使用说明
 
-- 主按钮：`color.brand.primary`、`radius.badge.default`、`shadow.control.subtle`。
-- 媒体槽：`grid.media.aspect`、`radius.card.default`。
-- 分区间距：`spacing.section.lg`。
-- 标题：`typography.size.hero` 和 `typography.weight.black`。
+- `color.brand.primary`: 主按钮、字标、链接。
+- `color.brand.soft`: hero 背景和轻标签。
+- `decoration.stripe.width`: 斜向色带。
+- `radius.card.default`: 卡片、媒体槽和 CTA。
+- `motion.duration.fast`: hover 和 active。
 
 ## 响应式说明
 
-- desktop: hero 双列，功能区三列，媒体网格自动填充。
-- tablet: hero 保持双列或上下堆叠，功能区两列。
-- mobile: hero 堆叠，CTA 按钮全宽，卡片单列或双列。
+- Desktop: hero 双列，功能区三列。
+- Tablet: hero 堆叠或窄双列，功能区两列。
+- Mobile: 顶部栏、紧凑 masthead、单列功能、全宽按钮、底部导航可选。
 
 ## 可访问性说明
 
-- 页面只有一个 `h1`。
-- CTA 使用明确按钮文本。
-- 媒体图像提供 alt。
-- 所有操作有 focus-visible。
-- 动效支持 reduced motion。
+- 页面只保留一个 `h1`。
+- 装饰元素 `aria-hidden="true"`。
+- 按钮有明确文本。
+- focus-visible 可见。
+- reduced motion 下关闭位移和装饰动画。
 
 ## 质量检查要点
 
-- 检查移动端是否无横向溢出。
-- 检查图片比例是否稳定。
-- 检查 CTA 是否不遮挡底部导航。
-- 检查中性占位文案是否可替换。
+- Hero 是否露出下一段。
+- 是否没有大幅营销图占满首屏。
+- 组件是否使用 token。
+- 移动端是否无横向溢出。
+- 文案是否中性可替换。

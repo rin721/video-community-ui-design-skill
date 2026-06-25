@@ -1,31 +1,30 @@
 import { useMemo, useState } from "react";
+import { categories, mediaItems } from "./data/fixtures";
 import { HomePage } from "./pages/HomePage";
-import { mediaItems } from "./data/fixtures";
 
 export type ViewState = "ready" | "loading" | "empty" | "error" | "success";
 
 export default function App() {
-  const [query, setQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("all");
   const [viewState, setViewState] = useState<ViewState>("ready");
 
   const filteredItems = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
-    if (!normalized) return mediaItems;
-    return mediaItems.filter((item) =>
-      [item.title, item.creator, item.category].some((value) =>
-        value.toLowerCase().includes(normalized),
-      ),
-    );
-  }, [query]);
+    if (activeCategory === "all") return mediaItems;
+    return mediaItems.filter((item) => item.category === activeCategory);
+  }, [activeCategory]);
 
   const visibleItems = viewState === "empty" ? [] : filteredItems;
 
   return (
     <HomePage
+      categories={categories}
+      activeCategory={activeCategory}
       items={visibleItems}
-      query={query}
       viewState={viewState}
-      onQueryChange={setQuery}
+      onCategoryChange={(value) => {
+        setActiveCategory(value);
+        setViewState("ready");
+      }}
       onViewStateChange={setViewState}
     />
   );
