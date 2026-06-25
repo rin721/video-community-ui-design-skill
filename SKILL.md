@@ -39,7 +39,7 @@ description: Build soft, lively, media-community UI systems for video-heavy home
 - `content_model`: 内容对象、字段、状态和排序方式。
 - `brand_overrides`: 可选主色、字体、圆角、密度和动效强度。
 - `tech_stack`: 可选 `html-css`、`react`、`vue`、`tailwind`、`figma-prompt`、`spec`。
-- `output_mode`: 可选输出形式；未指定时输出结构化 UI design spec。
+- `output_mode`: 可选输出形式；未指定时输出结构化 UI design spec，要求完整项目时使用 `frontend-project`。
 - `accessibility_level`: 默认 `wcag-aa`。
 
 ## 输出形式
@@ -58,8 +58,9 @@ description: Build soft, lively, media-community UI systems for video-heavy home
 6. `responsive-rules.md`
 7. `content-rules.md`
 8. `adaptation-rules.md`
-9. `output-modes.md`
-10. `validation-checklist.md`
+9. `frontend-project-rules.md`，仅在用户要求完整前端项目时读取。
+10. `output-modes.md`
+11. `validation-checklist.md`
 
 仅在需要可复用提示词或示例结构时读取 `prompt-templates.md` 与 `examples/`。
 
@@ -83,6 +84,7 @@ description: Build soft, lively, media-community UI systems for video-heavy home
 - 如果用户指定 React，输出组件拆分、props、状态和 CSS module 或 Tailwind 实现。
 - 如果用户指定 Vue，输出单文件组件结构、props、slots、状态和 scoped 样式。
 - 如果用户指定 Tailwind，输出 token 到 class 的映射，并保留 CSS variables 作为主题层。
+- 如果用户要求完整前端项目，读取 `frontend-project-rules.md`，输出可运行项目结构、入口文件、组件层、样式层、fixtures、状态分支和运行命令。
 - 如果用户缺少文案，使用中性占位文案。
 - 如果用户缺少图片，使用比例盒、渐变占位、alt 规则和可替换媒体槽。
 - 如果用户提供主色，替换 `color.brand.primary` 并重算浅层、悬停、焦点和阴影色。
@@ -155,6 +157,7 @@ description: Build soft, lively, media-community UI systems for video-heavy home
 - React: 将卡片、导航、公告、状态反馈拆成可组合组件。
 - Vue: 使用 props、slots 和 scoped CSS 表达组件变体。
 - Plain HTML/CSS: 使用语义标签、BEM 或 data-variant 属性承载状态。
+- Full frontend project: 使用 `frontend-project-rules.md` 生成可运行目录、入口、组件、样式、数据、状态和 README。
 
 ## 适配与替换规则
 

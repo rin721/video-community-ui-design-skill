@@ -124,6 +124,44 @@ Constraints:
 - Avoid horizontal overflow on mobile.
 ```
 
+## 生成完整前端项目
+
+```text
+Use video-community-ui-design-skill to generate a complete frontend project.
+Input:
+- output_mode: frontend-project
+- tech_stack: react
+- page_type: homepage
+- audience: [目标用户]
+- content_model: [内容字段]
+Must include:
+- package.json
+- index.html
+- src/main.tsx
+- src/App.tsx
+- src/pages/HomePage.tsx
+- src/components/*
+- src/styles/tokens.css
+- src/styles/base.css
+- src/styles/app.css
+- src/data/fixtures.ts
+- README.md
+Design requirements:
+- aesthetic style
+- visual framework
+- design system
+- component derivation
+- interaction and motion
+- brand expression
+- desktop/tablet/mobile responsive behavior
+- loading, empty, error, success states
+- WCAG AA accessibility notes
+Verification:
+- provide npm install, npm run dev, npm run build
+- ensure no horizontal overflow on mobile
+- ensure token variables are used in component styles
+```
+
 ## 生成 Vue 实现
 
 ```text

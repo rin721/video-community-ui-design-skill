@@ -63,6 +63,7 @@
 - 指定 Vue：输出 SFC 结构、props、slots 和样式。
 - 指定 Tailwind：输出 token 映射和 class 结构。
 - 指定 Figma：输出可粘贴的 Figma prompt。
+- 指定 Frontend Project：输出可运行项目文件树、入口、页面、组件、样式、fixtures、README 和运行命令。
 
 ## 10. 生成结果
 
@@ -86,3 +87,11 @@
 - 检查是否包含专有资产、真实业务数据或不可替换文案。
 - 检查 JSON 是否有效。
 - 检查 Markdown 是否结构清晰。
+
+## 13. 完整前端项目补充判断
+
+- 如果用户要求完整项目，必须读取 `frontend-project-rules.md`。
+- 如果未指定技术栈，默认 React、TypeScript、Vite 和 CSS variables。
+- 如果用户要求零依赖，切换为静态 HTML/CSS/JavaScript。
+- 如果输出代码落地，必须创建所有入口、组件、样式、fixtures 和 README。
+- 如果只输出方案，必须给出完整文件树和关键文件内容。

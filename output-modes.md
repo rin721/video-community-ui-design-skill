@@ -80,3 +80,14 @@
 - 输出 desktop、tablet、mobile 三套布局。
 - 明确导航切换、卡片列数、字号、间距和触控目标。
 - 明确横屏移动端和长文本策略。
+
+## Frontend Project
+
+- 输出可运行项目目录。
+- 输出 `package.json`、`index.html`、应用入口、页面、组件、样式、fixtures 和 README。
+- React 默认使用 TypeScript、Vite 和 CSS variables。
+- Vue 使用 SFC、TypeScript、Vite 和 scoped style。
+- HTML/CSS 使用静态目录、`styles/`、`scripts/` 和 `data/`。
+- 必须包含 AppShell、Navigation、Announcement、SearchFilter、CardGrid、MediaCard、CTA、Footer 和状态组件。
+- 必须包含 loading、empty、error、success、focus、disabled、active、hover。
+- 必须给出运行命令和构建检查。

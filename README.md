@@ -7,6 +7,7 @@
 - 为视频社区、内容发现、产品介绍和移动端页面生成统一 UI 规范。
 - 为内容卡片、导航、公告、CTA、表单、弹层、toast 和状态反馈生成可复用规则。
 - 为 HTML/CSS、React、Vue、Tailwind、Figma prompt 和 design spec 输出统一设计约束。
+- 为完整前端项目输出可运行目录、入口文件、组件层、样式层、fixtures、状态分支和运行说明。
 - 在缺少完整文案或媒体时，提供中性占位、比例盒、alt、空状态和错误状态规则。
 
 ## 适合生成的页面
@@ -50,6 +51,7 @@
 - Component library spec
 - Landing page structure
 - Responsive layout plan
+- Frontend project scaffold
 
 ## 文件结构
 
@@ -65,6 +67,7 @@
 ├── responsive-rules.md
 ├── content-rules.md
 ├── adaptation-rules.md
+├── frontend-project-rules.md
 ├── prompt-templates.md
 ├── runtime-decision-tree.md
 ├── output-modes.md
@@ -81,6 +84,7 @@
 - 更新视觉风格时，先改 `design-tokens.json`，再同步 `style-profile.md`。
 - 更新布局能力时，改 `layout-patterns.md` 并补充 `responsive-rules.md`。
 - 更新组件时，改 `component-recipes.md` 并保持状态、响应式和可访问性字段完整。
+- 更新完整项目生成能力时，改 `frontend-project-rules.md` 并同步 `output-modes.md` 与 `prompt-templates.md`。
 - 更新提示词时，改 `prompt-templates.md` 并保持中性占位文案。
 - 每次更新后运行 `validation-checklist.md` 中的检查项。
 
